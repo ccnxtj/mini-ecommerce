@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mini E-commerce
 
-## Getting Started
+เว็บไซต์ตัวอย่างร้านรองเท้าวิ่ง สร้างด้วย Next.js App Router และข้อมูลสินค้าแบบ Mock Data เพื่อฝึกการทำหน้าเว็บและการนำทางระหว่างหน้า
 
-First, run the development server:
+## เริ่มต้นใช้งาน
+
+ต้องติดตั้ง Node.js และ npm ก่อน จากนั้นเปิด Terminal ที่โฟลเดอร์โปรเจกต์แล้วรัน:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิด [http://localhost:3000](http://localhost:3000) เพื่อดูเว็บไซต์
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+คำสั่งอื่นที่ใช้ได้:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint   # ตรวจรูปแบบและข้อผิดพลาดของโค้ด
+npm run build  # สร้างเวอร์ชันสำหรับใช้งานจริง
+npm run start  # เปิดเวอร์ชันที่ build แล้ว
+```
 
-## Learn More
+## ฟีเจอร์
 
-To learn more about Next.js, take a look at the following resources:
+- หน้าแรกมี Hero banner, เมนูนำทาง, โลโก้แบรนด์, หมวดหมู่ และสินค้าแนะนำ
+- เมนู Brands เปิดรายการแบรนด์และกรองสินค้าได้
+- หน้ารวมสินค้ามีรูป ชื่อ ราคา หมวดหมู่ และลิงก์ดูรายละเอียด
+- หน้ารายละเอียดสินค้าใช้ Dynamic Route เช่น `/products/1`
+- แสดงหน้า Not Found เมื่อเปิดรหัสสินค้าที่ไม่มี
+- มี Loading UI สำหรับหน้าสินค้า
+- รองรับหน้าจอมือถือและเดสก์ท็อป
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Wishlist, การเลือกไซส์และจำนวน, ตะกร้าสินค้า และบางหมวดหมู่เป็น UI ตัวอย่าง ยังไม่มีการบันทึกข้อมูลหรือเชื่อม Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## แก้ไขข้อมูลสินค้า
 
-## Deploy on Vercel
+ข้อมูลสินค้าอยู่ใน `data/products.ts` แต่ละรายการมี `id`, `name`, `price`, `category`, `description` และ `image`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+รูปภาพสินค้าอยู่ใน `public/products` และอ้างอิงจากโค้ดโดยใช้ path ที่ขึ้นต้นด้วย `/products/` เช่น:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```ts
+{
+  id: "11",
+  name: "ชื่อรุ่นรองเท้า",
+  price: 3500,
+  category: "รองเท้าวิ่ง",
+  description: "รายละเอียดสินค้า",
+  image: "/products/shoe-image.jpg",
+}
+```
+
+นำไฟล์ `shoe-image.jpg` ไปใส่ใน `public/products` ก่อนเพิ่มสินค้า และกำหนด `id` ให้ไม่ซ้ำกัน
+
+## โครงสร้างโปรเจกต์
+
+```text
+app/
+  page.tsx                 หน้าแรก
+  layout.tsx               Layout หลักและ Footer
+  products/page.tsx        หน้ารวมสินค้า
+  products/[id]/page.tsx   หน้ารายละเอียดสินค้า
+  products/loading.tsx     Loading UI
+  products/not-found.tsx   หน้าไม่พบสินค้า
+components/                 ส่วนประกอบที่ใช้ซ้ำ
+data/products.ts            Mock Data สินค้าและแบรนด์
+public/brands/              โลโก้แบรนด์
+public/products/            รูปสินค้า
+```
+
+## เทคโนโลยี
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- IBM Plex Sans Thai
