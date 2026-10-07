@@ -2,17 +2,10 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/product-card";
-import { brands, products } from "@/data/products";
-
-const brandLogos: Record<string, string> = {
-  ASICS: "/brands/Asics_Logo.svg",
-  Nike: "/brands/Logo_NIKE.svg",
-  PUMA: "/brands/Puma-logo-(text).svg",
-  "New Balance": "/brands/New_Balance_logo.svg",
-  adidas: "/brands/Adidas_Logo.svg",
-  Mizuno: "/brands/MIZUNO_logo.svg",
-  HOKA: "/brands/hoka-com-brandmark.svg",
-};
+import BannerCarousel from "@/components/banner-carousel";
+import ProductDropdown from "@/components/product-dropdown";
+import MobileMenu from "@/components/mobile-menu";
+import { products } from "@/data/products";
 
 function Icon({ children }: { children: ReactNode }) {
   return (
@@ -34,17 +27,17 @@ function Icon({ children }: { children: ReactNode }) {
 export default function Home() {
   return (
     <>
-      <header className="bg-gradient-to-r from-[#8b6fd0] via-[#7c4dd6] to-[#6a4bbf] text-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-4 px-5 py-5 sm:gap-x-6 md:min-h-[100px] md:flex-nowrap md:gap-x-9 md:px-8 md:py-0 lg:px-10">
+      <header className="relative bg-gradient-to-r from-[#713487] via-[#6e2b84] to-[#622576] text-white">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 gap-y-4 px-5 py-5 sm:gap-x-6 sm:px-8 lg:min-h-[100px] lg:flex-nowrap lg:gap-x-9 lg:px-10 lg:py-0">
           <Link
-            className="shrink-0 text-[25px] font-bold tracking-[-1.3px] lg:text-[28px]"
+            className="order-1 shrink-0 lg:order-none"
             href="/"
-            aria-label="Warehouse home"
+            aria-label="กลับหน้าแรก"
           >
-            Mini E-commerce
+            <Image src="/logo.png" alt="Mini E-commerce" width={800} height={233} priority className="h-9 w-auto sm:h-12" />
           </Link>
           <form
-            className="order-3 flex h-12 w-full min-w-0 items-center overflow-hidden rounded-full bg-white text-[#6a4bbf] shadow-sm md:order-none md:flex-1"
+            className="order-3 flex h-12 w-full min-w-0 items-center overflow-hidden rounded-full bg-white text-[#622576] shadow-sm lg:order-none lg:flex-1"
             role="search"
             action="/"
           >
@@ -66,7 +59,7 @@ export default function Home() {
               </Icon>
             </button>
           </form>
-          <div className="ml-auto flex shrink-0 items-center gap-3 sm:gap-4">
+          <div className="order-2 ml-auto flex shrink-0 items-center gap-2 [&>a]:grid [&>a]:size-10 [&>a]:place-items-center [&>a]:rounded-full [&>a]:hover:bg-white/10 [&_svg]:size-6 sm:gap-3 lg:order-none lg:gap-4">
             <a href="#account" aria-label="Account">
               <Icon>
                 <circle cx="12" cy="7.5" r="3.5" />
@@ -95,102 +88,34 @@ export default function Home() {
                 <circle cx="12" cy="13" r="3" />
               </Icon>
             </a>
+            <MobileMenu inline />
           </div>
         </div>
         <nav
-          className="grid grid-cols-2 gap-x-3 gap-y-1 border-t border-white/10 px-5 py-2 text-sm font-bold [&>a]:flex [&>a]:min-h-11 [&>a]:items-center [&>a]:justify-center [&>a]:rounded-md [&>a]:px-2 [&>a]:text-center [&>a]:hover:bg-white/10 [&>a]:focus-visible:outline-2 [&>a]:focus-visible:outline-white md:flex md:min-h-14 md:items-center md:justify-center md:gap-8 md:py-1 md:text-[15px] lg:gap-10"
+          className="hidden border-t border-white/10 px-5 py-2 text-base font-bold [&>a]:min-h-12 [&>a]:items-center [&>a]:justify-center [&>a]:rounded-lg [&>a]:px-2 [&>a]:text-center [&>a]:hover:bg-white/10 [&>a]:focus-visible:outline-2 [&>a]:focus-visible:outline-white lg:flex lg:min-h-16 lg:items-center lg:justify-center lg:gap-7 lg:py-1 lg:[&>a]:flex xl:gap-10"
           aria-label="เมนูหลัก"
         >
-          <Link href="/">HOME</Link>
-          <a href="#products">PRODUCTS</a>
-          <details className="group relative flex min-h-11 items-center justify-center">
-            <summary className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-md px-3 text-center hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white [&::-webkit-details-marker]:hidden">
-              BRANDS
-              <svg className="size-3 transition-transform group-open:rotate-180" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                <path d="m1 1 5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </summary>
-            <div className="absolute left-1/2 top-full z-50 mt-2 w-56 -translate-x-1/2 rounded-xl bg-white p-2 text-left text-sm font-medium text-[#392567] shadow-xl ring-1 ring-[#e9e2f3]">
-              {brands.map((brand) => (
-                <Link key={brand} href={`/products?brand=${encodeURIComponent(brand)}`} className="block rounded-lg px-4 py-3 hover:bg-[#f5f0fc] focus-visible:bg-[#f5f0fc] focus-visible:outline-none">
-                  {brand}
-                </Link>
-              ))}
-            </div>
-          </details>
-          <a href="#category">CATEGORY</a>
-          <a href="#new-arrival">NEW ARRIVAL</a>
-          <a href="#contact">CONTACT</a>
+          <Link href="/">หน้าแรก</Link>
+          <ProductDropdown />
+          <Link href="/promotions">โปรโมชั่น</Link>
+          <Link href="/health-articles">บทความสุขภาพ</Link>
+          <Link href="/about">เกี่ยวกับเรา</Link>
+          <Link href="/contact">ติดต่อเรา</Link>
         </nav>
       </header>
       <main>
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#f8f5ff] via-[#eee7ff] to-[#dacbfa]">
-          <div className="pointer-events-none absolute -top-24 right-[-80px] size-80 rounded-full bg-white/50 blur-3xl" aria-hidden="true" />
-          <div className="pointer-events-none absolute -bottom-28 left-1/3 size-72 rounded-full bg-[#8b6fd0]/25 blur-3xl" aria-hidden="true" />
-          <div className="relative mx-auto grid max-w-6xl items-center gap-4 px-5 py-12 sm:px-8 sm:py-16 md:min-h-[440px] md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-8 md:py-10 lg:px-10">
-            <div className="relative z-10 max-w-lg text-center md:text-left">
-              <span className="inline-flex rounded-full bg-white px-4 py-2 text-xs font-semibold tracking-[0.15em] text-[#6a4bbf] shadow-sm">
-                NEW SEASON · NEW FAVORITES
-              </span>
-              <h1 className="mt-6 text-4xl leading-[1.08] font-bold tracking-tight text-[#392567] sm:text-5xl lg:text-6xl">
-                Run your<br />own way.
-              </h1>
-              <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-[#66577d] sm:text-base md:mx-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-              <a href="#products" className="mt-7 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#7c4dd6] px-7 text-sm font-semibold text-white shadow-lg shadow-purple-900/15 transition-colors hover:bg-[#6a4bbf] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6a4bbf]">
-                Shop <span aria-hidden="true">→</span>
-              </a>
-            </div>
-            <div className="relative mx-auto flex w-full max-w-[580px] items-center justify-center md:max-w-none">
-              <div className="absolute inset-[14%] rounded-full bg-white/50 blur-3xl" aria-hidden="true" />
-              <Image
-                src="/hero-shoes-cutout.png"
-                alt="รองเท้าวิ่งรุ่นเด่นพร้อมป้ายราคา"
-                width={1678}
-                height={937}
-                priority
-                className="relative h-auto w-full drop-shadow-[0_22px_28px_rgba(78,48,126,0.15)]"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-          </div>
-        </section>
-        <section id="brands" className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <h2 className="text-2xl font-bold text-[#392567]">เลือกตามแบรนด์</h2>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {brands.map((brand) => (
-              <Link key={brand} href={`/products?brand=${encodeURIComponent(brand)}`} aria-label={`ดูสินค้าแบรนด์ ${brand}`} className="flex min-h-32 items-center justify-center rounded-2xl border border-[#e9e2f3] bg-white p-4 shadow-sm hover:bg-[#f5f0fc]">
-                <Image src={brandLogos[brand]} alt="" width={160} height={80} className="h-14 w-full object-contain" />
-              </Link>
-            ))}
-          </div>
-        </section>
-        <section id="category" className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <h2 className="text-2xl font-bold text-[#392567]">หมวดหมู่สินค้า</h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Link href="/products" className="flex min-h-32 items-center justify-between rounded-2xl bg-[#f5f0fc] px-7 text-xl font-semibold text-[#392567] hover:bg-[#eee5f8]">
-              รองเท้าวิ่ง <span aria-hidden="true">→</span>
-            </Link>
-            {(["รองเท้าวิ่งเทรล", "อุปกรณ์วิ่ง"] as const).map((category) => (
-              <div key={category} className="flex min-h-32 flex-col justify-center rounded-2xl border border-[#e9e2f3] bg-[#faf8fd] px-7">
-                <h3 className="text-xl font-semibold text-[#392567]">{category}</h3>
-                <p className="mt-2 text-sm text-[#765b9f]">เร็ว ๆ นี้</p>
-              </div>
-            ))}
-          </div>
-        </section>
-        <section id="products" className="bg-[#faf8fd] py-14">
+        <BannerCarousel />
+        <section id="products" className="bg-[#fcf9fc] py-14">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h2 id="new-arrival" className="text-2xl font-bold text-[#392567]">สินค้าแนะนำ</h2>
-                <p className="mt-2 text-[#66577d]">สินค้าเด่นที่อยากให้คุณลองชม</p>
+                <h2 id="new-arrival" className="text-2xl font-bold text-[#40184f]">สินค้าแนะนำ</h2>
+                <p className="mt-2 text-[#69576e]">เตียงผู้ป่วยไฟฟ้าสำหรับการดูแลที่บ้าน</p>
               </div>
-              <Link href="/products" className="font-semibold text-[#6a4bbf] hover:underline">ดูสินค้าทั้งหมด →</Link>
+              <Link href="/products" className="font-semibold text-[#622576] hover:underline">ดูสินค้าทั้งหมด →</Link>
             </div>
             <div className="mt-7 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {products.map((product) => <ProductCard key={product.id} product={product} />)}
+              {products.slice(0, 6).map((product) => <ProductCard key={product.id} product={product} />)}
             </div>
           </div>
         </section>

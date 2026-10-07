@@ -26,13 +26,13 @@ export default async function ProductDetailPage({
       <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:px-10">
         <Link
           href="/products"
-          className="text-sm text-[#6a4bbf] hover:underline"
+          className="text-sm text-[#622576] hover:underline"
         >
           ← สินค้าทั้งหมด
         </Link>
         <div className="mt-8 grid gap-8 md:grid-cols-2 md:items-center">
-          <div className="rounded-3xl bg-[#f5f0fc] p-3">
-            <div className="overflow-hidden rounded-2xl border border-[#e9e2f3] bg-white">
+          <div className="rounded-3xl bg-[#f7f0f8] p-3">
+            <div className="overflow-hidden rounded-2xl border border-[#ebdfee] bg-white">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -44,74 +44,55 @@ export default async function ProductDetailPage({
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-[#765b9f]">
+            <p className="text-sm font-semibold text-[#80508f]">
               {product.category}
             </p>
-            <h1 className="mt-3 text-3xl font-bold text-[#392567] sm:text-4xl">
+            <h1 className="mt-3 text-3xl font-bold text-[#40184f] sm:text-4xl">
               {product.name}
             </h1>
-            <p className="mt-5 text-2xl font-bold text-[#6a4bbf]">
+            <p className="mt-5 text-2xl font-bold text-[#622576]">
               {formatPrice(product.price)}
             </p>
+            {product.originalPrice && <p className="mt-1 text-sm text-[#806e86] line-through">{formatPrice(product.originalPrice)}</p>}
             <div className="mt-5">
               <WishlistButton productName={product.name} />
             </div>
-            <p className="mt-6 leading-7 text-[#66577d]">
-              {product.description}
-            </p>
-            <div className="mt-7 grid max-w-md gap-5 sm:grid-cols-2">
-              <div>
-                <label
-                  htmlFor="shoe-size"
-                  className="mb-2 block text-sm font-semibold text-[#392567]"
-                >
-                  ขนาดรองเท้า (EU)
-                </label>
-                <select
-                  id="shoe-size"
-                  name="size"
-                  defaultValue=""
-                  className="h-12 w-full rounded-xl border border-[#d8c8ee] bg-white px-3 text-[#392567] outline-none focus:border-[#7c4dd6] focus:ring-2 focus:ring-[#7c4dd6]/20"
-                >
-                  <option value="" disabled>
-                    เลือกไซส์
-                  </option>
-                  {Array.from({ length: 10 }, (_, index) => index + 36).map(
-                    (size) => (
-                      <option key={size} value={`EU ${size}`}>
-                        EU {size}
-                      </option>
-                    ),
-                  )}
-                </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="quantity"
-                  className="mb-2 block text-sm font-semibold text-[#392567]"
-                >
-                  จำนวนคู่
-                </label>
-                <input
-                  id="quantity"
-                  name="quantity"
-                  type="number"
-                  min="1"
-                  defaultValue="1"
-                  className="h-12 w-full rounded-xl border border-[#d8c8ee] bg-white px-3 text-[#392567] outline-none focus:border-[#7c4dd6] focus:ring-2 focus:ring-[#7c4dd6]/20"
-                />
-              </div>
-            </div>
+            <ul className="mt-6 space-y-2 text-[#69576e]">
+              {product.features.map((feature) => <li key={feature}>• {feature}</li>)}
+            </ul>
+            {product.registration && <p className="mt-5 text-sm text-[#69576e]">เลขทะเบียน: {product.registration}</p>}
             <button
               type="button"
               disabled
               title="ระบบตะกร้าสินค้าจะเพิ่มในสัปดาห์ถัดไป"
-              className="mt-8 min-h-12 rounded-full bg-[#7c4dd6] px-8 font-semibold text-white opacity-60"
+              className="mt-8 min-h-12 rounded-full bg-[#6e2b84] px-8 font-semibold text-white opacity-60"
             >
               เพิ่มลงตะกร้า (เร็ว ๆ นี้)
             </button>
           </div>
         </div>
+        <section className="mt-16 border-t border-[#ebdfee] pt-10" aria-labelledby="product-details-heading">
+          <h2 id="product-details-heading" className="text-center text-2xl font-bold text-[#40184f] sm:text-3xl">รายละเอียดสินค้า</h2>
+          <div className="mx-auto mt-8 max-w-4xl overflow-hidden rounded-2xl">
+            <Image
+              src="/products/Komfortbed-Healthybed.jpg"
+              alt="ภาพแสดงฟังก์ชันปรับระดับเตียงผู้ป่วยไฟฟ้า"
+              width={1024}
+              height={551}
+              className="h-auto w-full"
+            />
+          </div>
+          {product.details && <div className="mx-auto mt-8 max-w-3xl space-y-8 text-[#55435d]">
+            {product.details.map((section, index) => (
+              <div key={section.title ?? index}>
+                {section.title && <h3 className="mb-4 text-xl font-bold text-[#40184f]">{section.title}</h3>}
+                <ul className="list-disc space-y-3 pl-6 leading-8 marker:text-[#622576]">
+                  {section.items.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>}
+        </section>
       </main>
     </>
   );

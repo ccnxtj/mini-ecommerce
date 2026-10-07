@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" role="img" aria-label="ภาพประกอบเตียงผู้ป่วยไฟฟ้า">
+  <rect width="600" height="480" fill="#f7f0f8"/>
+  <g fill="none" stroke="#8b5a9b" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M95 308V165a26 26 0 0 1 26-26h20a26 26 0 0 1 26 26v143M167 276h340a26 26 0 0 0 26-26v-16a26 26 0 0 0-26-26H167"/>
+    <path d="M105 309h440M145 309v57M505 309v57"/>
+    <circle cx="145" cy="376" r="12"/><circle cx="505" cy="376" r="12"/>
+  </g>
+  <text x="300" y="427" fill="#622576" font-family="sans-serif" font-size="21" text-anchor="middle">ภาพสินค้าเร็ว ๆ นี้</text>
+</svg>

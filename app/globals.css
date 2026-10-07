@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+body {
+  line-height: 1.65;
+}
+
+@keyframes banner-enter-next {
+  from { transform: translate3d(100%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes banner-exit-next {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-100%, 0, 0); }
+}
+
+@keyframes banner-enter-previous {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes banner-exit-previous {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(100%, 0, 0); }
+}
+
+.banner-enter-next { animation: banner-enter-next 1400ms cubic-bezier(.42, 0, .58, 1) both; }
+.banner-exit-next { animation: banner-exit-next 1400ms cubic-bezier(.42, 0, .58, 1) both; }
+.banner-enter-previous { animation: banner-enter-previous 1400ms cubic-bezier(.42, 0, .58, 1) both; }
+.banner-exit-previous { animation: banner-exit-previous 1400ms cubic-bezier(.42, 0, .58, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-enter-next,
+  .banner-exit-next,
+  .banner-enter-previous,
+  .banner-exit-previous { animation: none; }
+}

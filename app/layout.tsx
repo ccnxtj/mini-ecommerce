@@ -1,8 +1,8 @@
 import "./globals.css";
 import ShopFooter from "@/components/shop-footer";
-import { IBM_Plex_Sans_Thai } from "next/font/google";
+import { Noto_Sans_Thai_Looped } from "next/font/google";
 
-const ibmPlexSansThai = IBM_Plex_Sans_Thai({
+const notoSansThai = Noto_Sans_Thai_Looped({
   subsets: ["thai", "latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className={ibmPlexSansThai.className}>
+    <html lang="th" className={notoSansThai.className}>
       <body className="flex min-h-screen flex-col">
         <div className="flex-1">{children}</div>
         <ShopFooter />
