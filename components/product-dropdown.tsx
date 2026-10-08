@@ -57,7 +57,7 @@ export default function ProductDropdown() {
       className="group flex min-h-12 items-center justify-center"
     >
       <summary onClick={(event) => { event.preventDefault(); openMenu(); }} className="flex min-h-12 cursor-pointer list-none items-center justify-center gap-2 rounded-lg px-3 text-center text-base font-bold hover:bg-white/10 group-open:bg-white/10 focus-visible:outline-2 focus-visible:outline-white [&::-webkit-details-marker]:hidden">
-        สินค้า
+        หมวดหมู่
         <svg className="size-3 transition-transform group-open:rotate-180" viewBox="0 0 12 8" fill="none" aria-hidden="true">
           <path d="m1 1 5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -76,7 +76,9 @@ export default function ProductDropdown() {
               <ul className="mt-2 space-y-0.5">
                 {category.items.map((item) => (
                   <li key={item} className="rounded-lg text-sm leading-snug text-[#55435d] transition-colors duration-150 hover:bg-[#f7f0f8] hover:text-[#622576]">
-                    {item === "เตียงผู้ป่วยไฟฟ้า" ? <Link href="/products" onClick={closeMenu} className="block px-3 py-1.5">{item}</Link> : <span className="block px-3 py-1.5">{item}</span>}
+                    <Link href={item === "เตียงผู้ป่วยไฟฟ้า" ? "/products" : "/404"} onClick={closeMenu} className="block px-3 py-1.5">
+                      {item}
+                    </Link>
                   </li>
                 ))}
               </ul>

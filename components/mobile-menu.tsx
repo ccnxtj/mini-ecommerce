@@ -10,8 +10,6 @@ const menuLinkClass = "flex min-h-12 items-center justify-between rounded-xl px-
 const otherLinks = [
   { href: "/promotions", label: "โปรโมชั่น" },
   { href: "/health-articles", label: "บทความสุขภาพ" },
-  { href: "/about", label: "เกี่ยวกับเรา" },
-  { href: "/contact", label: "ติดต่อเรา" },
 ];
 
 export default function MobileMenu({ inline = false }: { inline?: boolean }) {
@@ -90,18 +88,23 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
         <div className="flex-1 overflow-y-auto px-3 py-4 text-base">
           <div className="grid gap-1">
             <Link href="/" onClick={() => setIsOpen(false)} className={menuLinkClass}>หน้าแรก</Link>
+            <Link href="/products" onClick={() => setIsOpen(false)} className={menuLinkClass}>สินค้า</Link>
             <details className="group/products rounded-xl bg-[#f7f0f8]">
               <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 font-bold text-[#40184f] hover:bg-[#f0e3f2] focus-visible:outline-2 focus-visible:outline-[#58206c] [&::-webkit-details-marker]:hidden">
-                สินค้า <span className="text-xl leading-none text-[#58206c] transition-transform group-open/products:rotate-45" aria-hidden="true">+</span>
+                หมวดหมู่ <span className="text-xl leading-none text-[#58206c] transition-transform group-open/products:rotate-45" aria-hidden="true">+</span>
               </summary>
               <div className="space-y-1 px-2 pb-2">
                 <Link href="/products" onClick={() => setIsOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold text-[#622576] hover:bg-white">สินค้าทั้งหมด</Link>
                 {categories.map((category) => (
-                  <div key={category.id}>
-                    <p className="flex min-h-10 items-center gap-2 px-3 py-2 text-sm leading-snug text-[#69576e]">
+                  <div key={category.id} className="pb-1">
+                    <p className="flex min-h-10 items-center gap-2 px-3 py-2 text-sm font-bold text-[#40184f]">
                       <span aria-hidden="true">•</span>{category.title}
                     </p>
-                    {category.id === "bedroom-care" && <Link href="/products" onClick={() => setIsOpen(false)} className="ml-8 block rounded-lg px-3 py-2 text-sm text-[#622576] hover:bg-white">เตียงผู้ป่วยไฟฟ้า</Link>}
+                    {category.items.map((item) => (
+                      <Link key={item} href={item === "เตียงผู้ป่วยไฟฟ้า" ? "/products" : "/404"} onClick={() => setIsOpen(false)} className="ml-6 block rounded-lg px-3 py-2 text-sm text-[#69576e] hover:bg-white hover:text-[#622576]">
+                        {item}
+                      </Link>
+                    ))}
                   </div>
                 ))}
               </div>
@@ -111,6 +114,15 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
                 {link.label}
               </Link>
             ))}
+            <details className="group/about rounded-xl bg-[#f7f0f8]">
+              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 font-bold text-[#40184f] hover:bg-[#f0e3f2] focus-visible:outline-2 focus-visible:outline-[#58206c] [&::-webkit-details-marker]:hidden">
+                เกี่ยวกับเรา <span className="text-xl leading-none text-[#58206c] transition-transform group-open/about:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <div className="space-y-1 px-2 pb-2">
+                <Link href="/about" onClick={() => setIsOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold text-[#622576] hover:bg-white">รู้จักเรา</Link>
+                <Link href="/contact" onClick={() => setIsOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold text-[#622576] hover:bg-white">ติดต่อเรา</Link>
+              </div>
+            </details>
           </div>
         </div>
       </div>

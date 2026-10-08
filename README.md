@@ -1,6 +1,6 @@
-# Mini E-commerce
+# Mini E-commerce (Medical Equipment)
 
-เว็บไซต์ตัวอย่างร้านรองเท้าวิ่ง สร้างด้วย Next.js App Router และข้อมูลสินค้าแบบ Mock Data เพื่อฝึกการทำหน้าเว็บและการนำทางระหว่างหน้า
+เว็บไซต์ตัวอย่างร้านขายอุปกรณ์เพื่อสุขภาพและเตียงผู้ป่วยไฟฟ้า สร้างด้วย Next.js App Router และข้อมูลสินค้าแบบ Mock Data เพื่อฝึกการทำโครงสร้างเว็บไซต์และการนำทางระหว่างหน้า (Routing) ด้วย Next.js
 
 ## เริ่มต้นใช้งาน
 
@@ -23,55 +23,43 @@ npm run start  # เปิดเวอร์ชันที่ build แล้�
 
 ## ฟีเจอร์
 
-- หน้าแรกมี Hero banner, เมนูนำทาง, โลโก้แบรนด์, หมวดหมู่ และสินค้าแนะนำ
-- เมนู Brands เปิดรายการแบรนด์และกรองสินค้าได้
-- หน้ารวมสินค้ามีรูป ชื่อ ราคา หมวดหมู่ และลิงก์ดูรายละเอียด
-- หน้ารายละเอียดสินค้าใช้ Dynamic Route เช่น `/products/1`
-- แสดงหน้า Not Found เมื่อเปิดรหัสสินค้าที่ไม่มี
-- มี Loading UI สำหรับหน้าสินค้า
-- รองรับหน้าจอมือถือและเดสก์ท็อป
+- **หน้าแรก (Home):** มี Hero Banner, เมนูนำทาง (Navigation), หมวดหมู่สินค้าแบบ Dropdown และส่วนแสดงสินค้าแนะนำ
+- **หมวดหมู่สินค้า:** มีโครงสร้างหมวดหมู่ที่ครอบคลุม เช่น อุปกรณ์ในห้องนอน, อุปกรณ์ตรวจวัด, และสินค้าเพื่อสุขภาพ
+- **หน้ารวมสินค้า (Product Listing):** แสดงผลรายการสินค้าในรูปแบบ Grid พร้อมรูปภาพ ชื่อ หมวดหมู่ และราคา
+- **หน้ารายละเอียดสินค้า (Product Detail):** ดึงข้อมูลจำลองมาแสดงผลผ่าน Dynamic Route (เช่น `/products/1`)
+- **ระบบ Not Found:** รองรับการแสดงหน้า 404 (Not Found) เมื่อผู้ใช้เข้าถึงลิงก์ที่ไม่มีอยู่จริง หรือใส่ ID สินค้าที่ไม่มีในระบบ
+- **Loading UI:** มีสถานะกำลังโหลดระหว่างเตรียมข้อมูลหน้าสินค้า
+- **ดีไซน์ Responsive:** ออกแบบด้วยแนวคิด Clean E-commerce UI สบายตาและรองรับทั้งหน้าจอมือถือและเดสก์ท็อป
 
-Wishlist, การเลือกไซส์และจำนวน, ตะกร้าสินค้า และบางหมวดหมู่เป็น UI ตัวอย่าง ยังไม่มีการบันทึกข้อมูลหรือเชื่อม Backend
+*หมายเหตุ: ฟังก์ชัน เช่น ปุ่มเพิ่มลงตะกร้า หรือ Wishlist เป็นเพียง UI ตัวอย่างสำหรับการฝึกสร้างหน้าเว็บในสัปดาห์แรก ยังไม่มีการทำงานร่วมกับระบบ Database จริง*
 
-## แก้ไขข้อมูลสินค้า
+## ข้อมูลจำลอง (Mock Data)
 
-ข้อมูลสินค้าอยู่ใน `data/products.ts` แต่ละรายการมี `id`, `name`, `price`, `category`, `description` และ `image`
+ข้อมูลสินค้าและหมวดหมู่ถูกจำลองไว้ในโฟลเดอร์ `data/` เพื่อให้ง่ายต่อการนำไปใช้งานและปรับแต่ง:
 
-รูปภาพสินค้าอยู่ใน `public/products` และอ้างอิงจากโค้ดโดยใช้ path ที่ขึ้นต้นด้วย `/products/` เช่น:
+- `data/products.ts`: เก็บข้อมูลสินค้าทั้งหมด (id, ชื่อ, ราคา, รายละเอียด, คุณสมบัติ ฯลฯ)
+- `data/categories.ts`: เก็บข้อมูลโครงสร้างเมนูหมวดหมู่สินค้า
 
-```ts
-{
-  id: "11",
-  name: "ชื่อรุ่นรองเท้า",
-  price: 3500,
-  category: "รองเท้าวิ่ง",
-  description: "รายละเอียดสินค้า",
-  image: "/products/shoe-image.jpg",
-}
-```
-
-นำไฟล์ `shoe-image.jpg` ไปใส่ใน `public/products` ก่อนเพิ่มสินค้า และกำหนด `id` ให้ไม่ซ้ำกัน
+รูปภาพสินค้าจะอยู่ในโฟลเดอร์ `public/products/` ซึ่งสามารถกำหนด Path ใน Mock data เป็น `/products/ชื่อรูป.jpg` ได้โดยตรง
 
 ## โครงสร้างโปรเจกต์
 
 ```text
 app/
-  page.tsx                 หน้าแรก
-  layout.tsx               Layout หลักและ Footer
+  page.tsx                 หน้าแรกของเว็บไซต์
+  layout.tsx               โครงสร้าง Layout หลัก (Header, Footer)
   products/page.tsx        หน้ารวมสินค้า
-  products/[id]/page.tsx   หน้ารายละเอียดสินค้า
-  products/loading.tsx     Loading UI
-  products/not-found.tsx   หน้าไม่พบสินค้า
-components/                 ส่วนประกอบที่ใช้ซ้ำ
-data/products.ts            Mock Data สินค้าและแบรนด์
-public/brands/              โลโก้แบรนด์
-public/products/            รูปสินค้า
+  products/[id]/page.tsx   หน้ารายละเอียดสินค้า (Dynamic Route)
+  products/loading.tsx     หน้า Loading UI
+  products/not-found.tsx   หน้า Custom 404 เมื่อไม่พบสินค้า
+components/                 แหล่งรวม UI Components (เช่น ProductCard, ShopHeader)
+data/                       ไฟล์ Mock Data สำหรับสินค้าและหมวดหมู่
+public/                     ที่เก็บไฟล์ Static ต่างๆ เช่น โลโก้ และรูปภาพ
 ```
 
 ## เทคโนโลยี
 
-- Next.js 16
-- React 19
+- Next.js (App Router)
+- React
 - TypeScript
-- Tailwind CSS 4
-- IBM Plex Sans Thai
+- Tailwind CSS

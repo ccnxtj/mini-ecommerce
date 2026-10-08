@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { formatPrice, products } from "@/data/products";
 import ShopHeader from "@/components/shop-header";
 import WishlistButton from "@/components/wishlist-button";
+import AddToCartButton from "@/components/add-to-cart-button";
 
 export const dynamicParams = false;
 
@@ -32,7 +33,7 @@ export default async function ProductDetailPage({
         </Link>
         <div className="mt-8 grid gap-8 md:grid-cols-2 md:items-center">
           <div className="rounded-3xl bg-[#f7f0f8] p-3">
-            <div className="overflow-hidden rounded-2xl border border-[#ebdfee] bg-white">
+            <div className="relative overflow-hidden rounded-2xl border border-[#ebdfee] bg-white">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -41,6 +42,21 @@ export default async function ProductDetailPage({
                 className="aspect-[5/4] w-full object-cover"
                 priority
               />
+              
+              {/* Badges Container */}
+              <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none">
+                {/* In Stock Badge */}
+                <span className="inline-block w-fit rounded-md bg-[#e3f9e5] px-3 py-1.5 text-xs font-bold text-[#1f8b24] shadow-sm">
+                  ✓ มีสินค้าพร้อมส่ง
+                </span>
+                
+                {/* Discount Badge */}
+                {product.originalPrice && product.originalPrice > product.price && (
+                  <span className="inline-block w-fit rounded-md bg-[#ff646b] px-3 py-1.5 text-xs font-bold text-white shadow-sm">
+                    ลดราคา {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           <div>
@@ -61,14 +77,7 @@ export default async function ProductDetailPage({
               {product.features.map((feature) => <li key={feature}>• {feature}</li>)}
             </ul>
             {product.registration && <p className="mt-5 text-sm text-[#69576e]">เลขทะเบียน: {product.registration}</p>}
-            <button
-              type="button"
-              disabled
-              title="ระบบตะกร้าสินค้าจะเพิ่มในสัปดาห์ถัดไป"
-              className="mt-8 min-h-12 rounded-full bg-[#6e2b84] px-8 font-semibold text-white opacity-60"
-            >
-              เพิ่มลงตะกร้า (เร็ว ๆ นี้)
-            </button>
+            <AddToCartButton productName={product.name} />
           </div>
         </div>
         <section className="mt-16 border-t border-[#ebdfee] pt-10" aria-labelledby="product-details-heading">

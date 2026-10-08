@@ -4,8 +4,12 @@ import Image from "next/image";
 import ProductCard from "@/components/product-card";
 import BannerCarousel from "@/components/banner-carousel";
 import ProductDropdown from "@/components/product-dropdown";
+import AboutDropdown from "@/components/about-dropdown";
+import WishlistBadge from "@/components/wishlist-badge";
+import CartBadge from "@/components/cart-badge";
 import MobileMenu from "@/components/mobile-menu";
 import { products } from "@/data/products";
+import AccountIcon from "@/components/account-icon";
 
 function Icon({ children }: { children: ReactNode }) {
   return (
@@ -25,21 +29,22 @@ function Icon({ children }: { children: ReactNode }) {
 }
 
 export default function Home() {
+
   return (
     <>
       <header className="relative bg-gradient-to-r from-[#713487] via-[#6e2b84] to-[#622576] text-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 gap-y-4 px-5 py-5 sm:gap-x-6 sm:px-8 lg:min-h-[100px] lg:flex-nowrap lg:gap-x-9 lg:px-10 lg:py-0">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-1 gap-y-3 px-3 py-4 sm:gap-x-6 sm:px-8 lg:min-h-[100px] lg:flex-nowrap lg:gap-x-9 lg:px-10 lg:py-0">
           <Link
             className="order-1 shrink-0 lg:order-none"
             href="/"
             aria-label="กลับหน้าแรก"
           >
-            <Image src="/logo.png" alt="Mini E-commerce" width={800} height={233} priority className="h-9 w-auto sm:h-12" />
+            <Image src="/logo.png" alt="Mini E-commerce" width={800} height={233} priority className="h-7 w-auto sm:h-12" />
           </Link>
           <form
             className="order-3 flex h-12 w-full min-w-0 items-center overflow-hidden rounded-full bg-white text-[#622576] shadow-sm lg:order-none lg:flex-1"
             role="search"
-            action="/"
+            action="/search"
           >
             <input
               className="h-full min-w-0 flex-1 border-0 px-5 text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
@@ -59,35 +64,20 @@ export default function Home() {
               </Icon>
             </button>
           </form>
-          <div className="order-2 ml-auto flex shrink-0 items-center gap-2 [&>a]:grid [&>a]:size-10 [&>a]:place-items-center [&>a]:rounded-full [&>a]:hover:bg-white/10 [&_svg]:size-6 sm:gap-3 lg:order-none lg:gap-4">
-            <a href="#account" aria-label="Account">
-              <Icon>
-                <circle cx="12" cy="7.5" r="3.5" />
-                <path d="M4.5 20v-1.5a7.5 7.5 0 0 1 15 0V20" />
-              </Icon>
-            </a>
-            <a href="#wishlist" aria-label="Wishlist">
+          <div className="order-2 ml-auto flex shrink-0 items-center gap-1 sm:gap-2 [&>a]:grid [&>a]:size-9 sm:[&>a]:size-10 [&>a]:place-items-center [&>a]:rounded-full [&>a]:hover:bg-white/10 [&_svg]:size-5 sm:[&_svg]:size-6 sm:gap-3 lg:order-none lg:gap-4">
+            <AccountIcon />
+            <Link className="relative" href="/wishlist" aria-label="Wishlist">
               <Icon>
                 <path d="M20.5 8.4c0 4.1-8.5 10-8.5 10s-8.5-5.9-8.5-10a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2Z" />
               </Icon>
-            </a>
-            <a className="relative" href="#cart" aria-label="Cart, 0 items">
+              <WishlistBadge />
+            </Link>
+            <Link className="relative" href="/cart" aria-label={`Cart, items`}>
               <Icon>
                 <path d="M4 9h16l-1.4 10H5.4L4 9ZM8 9l4-5 4 5M9 13v3m6-3v3" />
               </Icon>
-              <span className="absolute -top-3 -right-2 grid size-4 place-items-center rounded-full bg-[#ff646b] text-[10px] font-bold">
-                0
-              </span>
-            </a>
-            <a href="#settings" aria-label="Settings">
-              <Icon>
-                <path
-                  d="M12 2.5 13.2 5l2 .8 2.6-1 2.4 2.4-1 2.6.8 2 2.5 1.2v3.4L20 17.6l-.8 2 1 2.6-2.4 2.4-2.6-1-2 .8-1.2 2.5-3.4-1.2-.8-2-2.6 1-2.4-2.4 1-2.6-.8-2L.5 16.4V13l2.5-1.2.8-2-1-2.6 2.4-2.4 2.6 1 2-.8L11 2.5Z"
-                  transform="translate(2 1) scale(.8)"
-                />
-                <circle cx="12" cy="13" r="3" />
-              </Icon>
-            </a>
+              <CartBadge />
+            </Link>
             <MobileMenu inline />
           </div>
         </div>
@@ -96,11 +86,11 @@ export default function Home() {
           aria-label="เมนูหลัก"
         >
           <Link href="/">หน้าแรก</Link>
+          <Link href="/products">สินค้า</Link>
           <ProductDropdown />
           <Link href="/promotions">โปรโมชั่น</Link>
           <Link href="/health-articles">บทความสุขภาพ</Link>
-          <Link href="/about">เกี่ยวกับเรา</Link>
-          <Link href="/contact">ติดต่อเรา</Link>
+          <AboutDropdown />
         </nav>
       </header>
       <main>
