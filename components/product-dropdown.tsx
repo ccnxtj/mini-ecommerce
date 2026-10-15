@@ -45,6 +45,7 @@ export default function ProductDropdown() {
     };
   }, []);
 
+
   return (
     <details
       ref={detailsRef}
@@ -76,7 +77,7 @@ export default function ProductDropdown() {
               <ul className="mt-2 space-y-0.5">
                 {category.items.map((item) => (
                   <li key={item} className="rounded-lg text-sm leading-snug text-[#55435d] transition-colors duration-150 hover:bg-[#f7f0f8] hover:text-[#622576]">
-                    <Link href={item === "เตียงผู้ป่วยไฟฟ้า" ? "/products" : "/404"} onClick={closeMenu} className="block px-3 py-1.5">
+                    <Link href={`/products?category=${encodeURIComponent(item)}`} onClick={closeMenu} className="block px-3 py-1.5">
                       {item}
                     </Link>
                   </li>

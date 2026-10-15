@@ -5,6 +5,7 @@ export type Product = {
   category: string;
   price: number;
   originalPrice?: number;
+  stock?: number;
   features: string[];
   details?: { title?: string; items: string[] }[];
   registration?: string;

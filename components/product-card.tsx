@@ -5,40 +5,58 @@ import WishlistButton from "@/components/wishlist-button";
 import AddToCartHover from "@/components/add-to-cart-hover";
 
 export default function ProductCard({ product }: { product: Product }) {
+  const discountPct =
+    product.originalPrice && product.originalPrice > product.price
+      ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+      : null;
+
   return (
-    <article className="group overflow-hidden rounded-2xl border border-[#ebdfee] bg-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="relative bg-[#f7f0f8] p-3">
-        <Link href={`/products/${product.id}`} className="block overflow-hidden rounded-xl border border-[#ebdfee] bg-white relative">
-          <Image src={product.image} alt={product.name} width={400} height={320} className="aspect-[5/4] w-full object-cover" />
-          
-          {/* Badges Container */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2 pointer-events-none">
-            {/* In Stock Badge */}
-            <span className="inline-block rounded-md bg-[#e3f9e5] px-2.5 py-1 text-[10px] font-bold text-[#1f8b24] shadow-sm">
-              ✓ มีสินค้า
-            </span>
-            
-            {/* Discount Badge */}
-            {product.originalPrice && product.originalPrice > product.price && (
-              <span className="inline-block w-fit rounded-md bg-[#ff646b] px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
-                ลด {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-              </span>
-            )}
-          </div>
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-shadow hover:shadow-md">
+      {/* รูปสินค้า */}
+      <div className="relative">
+        <Link href={`/products/${product.id}`} className="block">
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={400}
+            height={320}
+            className="aspect-[5/4] w-full object-cover bg-zinc-50"
+          />
         </Link>
-        <div className="absolute right-5 top-5 z-20"><WishlistButton productName={product.name} compact /></div>
+
+        {/* Badges — ส่วนลด สีแดงสดใสตัดกับโทนเว็บ ไม่ม่วงกลืน */}
+        {discountPct && (
+          <span className="pointer-events-none absolute left-3 top-3 rounded-md bg-rose-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-xs">
+            -{discountPct}%
+          </span>
+        )}
+
+        {/* Wishlist */}
+        <div className="absolute right-3 top-3 z-20">
+          <WishlistButton productName={product.name} compact />
+        </div>
       </div>
-      <div className="p-5 flex flex-col h-full">
-        <p className="text-sm text-[#80508f]">{product.category}</p>
-        <h3 className="mt-1 text-lg font-semibold text-[#40184f]">{product.name}</h3>
-        <p className="mt-2 font-bold text-[#622576]">{formatPrice(product.price)}</p>
-        {product.originalPrice && <p className="text-sm text-[#806e86] line-through">{formatPrice(product.originalPrice)}</p>}
-        
-        <div className="mt-4 flex items-center justify-between">
-          <Link href={`/products/${product.id}`} className="inline-flex min-h-11 items-center font-semibold text-[#622576] underline-offset-4 hover:underline">
-            ดูรายละเอียด <span aria-hidden="true" className="ml-2">→</span>
+
+      {/* ข้อมูลสินค้า */}
+      <div className="flex flex-1 flex-col p-4">
+        <p className="text-xs font-medium uppercase tracking-wide text-zinc-400">{product.categoryName || product.category}</p>
+        <h3 className="mt-1 text-base font-semibold text-zinc-900 leading-snug">{product.name}</h3>
+
+        <div className="mt-3 flex items-end gap-2">
+          <span className="text-lg font-bold text-rose-600">{formatPrice(product.price)}</span>
+          {product.originalPrice && (
+            <span className="mb-0.5 text-sm text-zinc-400 line-through">{formatPrice(product.originalPrice)}</span>
+          )}
+        </div>
+
+        <div className="mt-4 flex items-center justify-between gap-2">
+          <Link
+            href={`/products/${product.id}`}
+            className="text-sm font-semibold text-[#622576] hover:underline underline-offset-4"
+          >
+            ดูรายละเอียด
           </Link>
-          <AddToCartHover productName={product.name} />
+          <AddToCartHover product={product} />
         </div>
       </div>
     </article>

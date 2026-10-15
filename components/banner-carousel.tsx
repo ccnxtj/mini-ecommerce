@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const banners = [
-  { src: "/banner-1.jpg", alt: "Allwell สินค้าเพื่อสุขภาพสำหรับทุกคนในครอบครัว" },
-  { src: "/banner-2.jpg", alt: "Allwell สินค้าเพื่อสุขภาพและการดูแลผู้สูงอายุ" },
+  { src: "/banners/banner-1.jpg", alt: "Allwell สินค้าเพื่อสุขภาพสำหรับทุกคนในครอบครัว" },
+  { src: "/banners/banner-2.jpg", alt: "Allwell สินค้าเพื่อสุขภาพและการดูแลผู้สูงอายุ" },
 ];
 
 export default function BannerCarousel() {
@@ -46,10 +46,10 @@ export default function BannerCarousel() {
   return (
     <section aria-label="แบนเนอร์ Allwell" aria-roledescription="carousel">
       <h1 className="sr-only">Allwell สินค้าเพื่อสุขภาพ</h1>
-      <div className="relative aspect-[3319/1263] w-full overflow-hidden bg-[#f7f0f8]">
+      <div className="relative aspect-[16/6] sm:aspect-[21/8] w-full overflow-hidden">
         {previousIndex !== null && (
           <div className={`absolute inset-0 ${direction === 1 ? "banner-exit-next" : "banner-exit-previous"}`} aria-hidden="true">
-            <Image src={banners[previousIndex].src} alt="" fill sizes="100vw" className="object-contain" />
+            <Image src={banners[previousIndex].src} alt="" fill sizes="100vw" className="object-cover" />
           </div>
         )}
         <div className={`absolute inset-0 ${previousIndex !== null ? direction === 1 ? "banner-enter-next" : "banner-enter-previous" : ""}`}>
@@ -59,7 +59,7 @@ export default function BannerCarousel() {
             fill
             priority={activeIndex === 0}
             sizes="100vw"
-            className="object-contain"
+            className="object-cover"
           />
         </div>
         <button

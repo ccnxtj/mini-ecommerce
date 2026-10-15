@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
-import ProductDropdown from "@/components/product-dropdown";
 import MobileMenu from "@/components/mobile-menu";
 import WishlistBadge from "@/components/wishlist-badge";
 import CartBadge from "@/components/cart-badge";
@@ -27,19 +26,37 @@ function Icon({ children }: { children: ReactNode }) {
 export default function ShopHeader() {
   return (
     <header className="relative bg-gradient-to-r from-[#713487] via-[#6e2b84] to-[#622576] text-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-8 lg:min-h-[100px] lg:px-10 lg:py-0">
-        <Link href="/" aria-label="กลับหน้าแรก" className="shrink-0">
-          <Image src="/logo.png" alt="Mini E-commerce" width={800} height={233} priority className="h-9 w-auto sm:h-12" />
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-1 gap-y-3 px-3 py-4 sm:gap-x-6 sm:px-8 lg:min-h-[100px] lg:flex-nowrap lg:gap-x-9 lg:px-10 lg:py-0">
+        <Link className="order-1 shrink-0 lg:order-none" href="/" aria-label="กลับหน้าแรก">
+          <Image src="/logo.png" alt="Allwell" width={800} height={233} priority className="h-7 w-auto sm:h-12" />
         </Link>
-        
-        <nav className="hidden flex-1 items-center justify-center gap-1 text-base font-bold [&>a]:flex [&>a]:min-h-12 [&>a]:items-center [&>a]:justify-center [&>a]:whitespace-nowrap [&>a]:rounded-lg [&>a]:px-3 [&>a]:text-center [&>a]:hover:bg-white/10 [&>a]:focus-visible:outline-2 [&>a]:focus-visible:outline-white lg:flex" aria-label="เมนูหลัก">
-          <Link href="/">หน้าแรก</Link>
-          <Link href="/products">สินค้า</Link>
-          <ProductDropdown />
-          <Link href="/promotions">โปรโมชั่น</Link>
-        </nav>
 
-        <div className="flex shrink-0 items-center gap-2 [&>a]:grid [&>a]:size-10 [&>a]:place-items-center [&>a]:rounded-full [&>a]:hover:bg-white/10 [&_svg]:size-6 sm:gap-3 lg:gap-4">
+        {/* Search bar — เหมือน home page */}
+        <form
+          className="order-3 flex h-12 w-full min-w-0 items-center overflow-hidden rounded-full bg-white text-[#622576] shadow-sm lg:order-none lg:flex-1"
+          role="search"
+          action="/search"
+        >
+          <input
+            className="h-full min-w-0 flex-1 border-0 px-5 text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
+            name="q"
+            type="search"
+            placeholder="ค้นหาสินค้า..."
+            aria-label="ค้นหาสินค้า"
+          />
+          <button
+            className="grid h-full w-12 shrink-0 cursor-pointer place-items-center"
+            type="submit"
+            aria-label="ค้นหา"
+          >
+            <Icon>
+              <circle cx="10.8" cy="10.8" r="6.2" />
+              <path d="m16 16 4.5 4.5" />
+            </Icon>
+          </button>
+        </form>
+
+        <div className="order-2 ml-auto flex shrink-0 items-center gap-1 sm:gap-2 [&>a]:grid [&>a]:size-9 sm:[&>a]:size-10 [&>a]:place-items-center [&>a]:rounded-full [&>a]:hover:bg-white/10 [&_svg]:size-5 sm:[&_svg]:size-6 sm:gap-3 lg:order-none lg:gap-4">
           <AccountIcon />
           <Link className="relative" href="/wishlist" aria-label="Wishlist">
             <Icon>
@@ -47,7 +64,7 @@ export default function ShopHeader() {
             </Icon>
             <WishlistBadge />
           </Link>
-          <Link className="relative" href="/cart" aria-label="Cart">
+          <Link className="relative" href="/cart" aria-label="ตะกร้าสินค้า">
             <Icon>
               <path d="M4 9h16l-1.4 10H5.4L4 9ZM8 9l4-5 4 5M9 13v3m6-3v3" />
             </Icon>
@@ -56,6 +73,17 @@ export default function ShopHeader() {
           <MobileMenu inline />
         </div>
       </div>
+
+      {/* Navbar */}
+      <nav
+        className="hidden border-t border-white/10 px-5 py-2 text-base font-bold [&>a]:min-h-12 [&>a]:items-center [&>a]:justify-center [&>a]:rounded-lg [&>a]:px-2 [&>a]:text-center [&>a]:hover:bg-white/10 [&>a]:focus-visible:outline-2 [&>a]:focus-visible:outline-white lg:flex lg:min-h-16 lg:items-center lg:justify-center lg:gap-7 lg:py-1 lg:[&>a]:flex xl:gap-10"
+        aria-label="เมนูหลัก"
+      >
+        <Link href="/">หน้าแรก</Link>
+        <Link href="/products">สินค้า</Link>
+        <Link href="/promotions">โปรโมชั่น</Link>
+        <Link href="/health-articles">บทความสุขภาพ</Link>
+      </nav>
     </header>
   );
 }

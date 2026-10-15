@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ShopHeader from "@/components/shop-header";
 import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/contexts/toast-context";
 
 export default function AddressPage() {
   const router = useRouter();
   const { user, isInitialized } = useAuth();
+  const { toast } = useToast();
   
   const [address, setAddress] = useState("123/45 ถนนสุขุมวิท แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพมหานคร 10110");
   const [phone, setPhone] = useState("081-234-5678");
@@ -42,7 +44,7 @@ export default function AddressPage() {
     localStorage.setItem(`phone_${user.email}`, phone);
     
     setIsSaving(false);
-    alert("บันทึกที่อยู่เรียบร้อยแล้ว");
+    toast("บันทึกที่อยู่เรียบร้อยแล้ว", "success");
     
     // หากกดมาจากหน้า checkout ก็สามารถเด้งกลับไปได้เลย (Optionally)
     // แต่เพื่อความง่าย เราจะให้ผู้ใช้กดกลับเอง หรือเปลี่ยนทางตามความเหมาะสม

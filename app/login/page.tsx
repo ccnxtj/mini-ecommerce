@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/contexts/toast-context";
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -102,7 +104,7 @@ export default function LoginPage() {
                 }}
                 onError={() => {
                   console.log("Google Sign-In Failed");
-                  alert("การเข้าสู่ระบบด้วย Google ล้มเหลว กรุณาลองใหม่อีกครั้ง");
+                  toast("การเข้าสู่ระบบด้วย Google ล้มเหลว กรุณาลองใหม่อีกครั้ง", "error");
                 }}
                 theme="outline"
                 shape="pill"

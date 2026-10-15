@@ -17,6 +17,7 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -101,7 +102,12 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
                       <span aria-hidden="true">•</span>{category.title}
                     </p>
                     {category.items.map((item) => (
-                      <Link key={item} href={item === "เตียงผู้ป่วยไฟฟ้า" ? "/products" : "/404"} onClick={() => setIsOpen(false)} className="ml-6 block rounded-lg px-3 py-2 text-sm text-[#69576e] hover:bg-white hover:text-[#622576]">
+                      <Link
+                        key={item}
+                        href={`/products?category=${encodeURIComponent(item)}`}
+                        onClick={() => setIsOpen(false)}
+                        className="ml-6 block rounded-lg px-3 py-2 text-sm text-[#69576e] hover:bg-white hover:text-[#622576]"
+                      >
                         {item}
                       </Link>
                     ))}
@@ -114,15 +120,6 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
                 {link.label}
               </Link>
             ))}
-            <details className="group/about rounded-xl bg-[#f7f0f8]">
-              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 font-bold text-[#40184f] hover:bg-[#f0e3f2] focus-visible:outline-2 focus-visible:outline-[#58206c] [&::-webkit-details-marker]:hidden">
-                เกี่ยวกับเรา <span className="text-xl leading-none text-[#58206c] transition-transform group-open/about:rotate-45" aria-hidden="true">+</span>
-              </summary>
-              <div className="space-y-1 px-2 pb-2">
-                <Link href="/about" onClick={() => setIsOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold text-[#622576] hover:bg-white">รู้จักเรา</Link>
-                <Link href="/contact" onClick={() => setIsOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold text-[#622576] hover:bg-white">ติดต่อเรา</Link>
-              </div>
-            </details>
           </div>
         </div>
       </div>

@@ -1,16 +1,25 @@
 import "./globals.css";
 import ShopFooter from "@/components/shop-footer";
-import { Noto_Sans_Thai_Looped } from "next/font/google";
+import { Prompt } from "next/font/google";
 import { WishlistProvider } from "@/contexts/wishlist-context";
 import { CartProvider } from "@/contexts/cart-context";
 import { AuthProvider } from "@/contexts/auth-context";
 import { OrderProvider } from "@/contexts/order-context";
+import { ToastProvider } from "@/contexts/toast-context";
 
-const notoSansThai = Noto_Sans_Thai_Looped({
+import type { Metadata } from "next";
+
+const prompt = Prompt({
   subsets: ["thai", "latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://healthybed.co.th"),
+  title: "Healthybed | เตียงผู้ป่วยไฟฟ้าและอุปกรณ์ดูแลสุขภาพ",
+  description: "ศูนย์รวมเตียงผู้ป่วยไฟฟ้า ที่นอนป้องกันแผลกดทับ และอุปกรณ์ดูแลผู้สูงอายุมาตรฐานสากล",
+};
 
 export default function RootLayout({
   children,
@@ -18,14 +27,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className={notoSansThai.className}>
-      <body className="flex min-h-screen flex-col">
+    <html lang="th" className={prompt.className}>
+      <body className="flex min-h-screen flex-col bg-white text-zinc-900">
         <AuthProvider>
           <OrderProvider>
             <CartProvider>
               <WishlistProvider>
-                <div className="flex-1">{children}</div>
-                <ShopFooter />
+                <ToastProvider>
+                  <div className="flex-1">{children}</div>
+                  <ShopFooter />
+                </ToastProvider>
               </WishlistProvider>
             </CartProvider>
           </OrderProvider>

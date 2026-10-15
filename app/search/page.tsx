@@ -13,8 +13,12 @@ export default async function SearchPage({
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(query) ||
+    (product.shortName && product.shortName.toLowerCase().includes(query)) ||
     product.category.toLowerCase().includes(query) ||
-    (product.features && product.features.some(f => f.toLowerCase().includes(query)))
+    (product.categoryName && product.categoryName.toLowerCase().includes(query)) ||
+    (product.brand && product.brand.toLowerCase().includes(query)) ||
+    (product.features && product.features.some((f) => f.toLowerCase().includes(query))) ||
+    (product.tags && product.tags.some((t) => t.toLowerCase().includes(query)))
   );
 
   return (
@@ -36,8 +40,14 @@ export default async function SearchPage({
         ) : (
           <div className="mt-12 text-center text-[#69576e]">
             <p className="text-lg">ไม่พบสินค้าที่ตรงกับการค้นหา</p>
-            <Link href="/products" className="mt-6 inline-block rounded-lg bg-[#622576] px-6 py-3 font-semibold text-white hover:bg-[#58206c]">
-              ดูสินค้าทั้งหมด
+            <Link
+              href="/products"
+              className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#622576] px-6 py-2.5 text-sm font-semibold text-[#622576] transition-colors hover:bg-[#622576] hover:text-white"
+            >
+              <span>ดูสินค้าทั้งหมด</span>
+              <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14m-7-7 7 7-7 7" />
+              </svg>
             </Link>
           </div>
         )}

@@ -2,35 +2,117 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+  quantity: number;
+  selected?: boolean;
+};
+
 type CartContextType = {
-  cart: string[];
-  addToCart: (item: string) => void;
-  removeFromCart: (item: string) => void;
+  cart: CartItem[];
+  addToCart: (item: Omit<CartItem, "quantity" | "selected">, qty?: number) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
-  isInCart: (item: string) => boolean;
+  isInCart: (id: string) => boolean;
+  getQuantity: (id: string) => number;
+  totalItems: number;
+  totalPrice: number;
+  // Selection
+  toggleSelectItem: (id: string) => void;
+  selectAllItems: (selected: boolean) => void;
+  removeSelectedFromCart: () => void;
+  selectedItems: CartItem[];
+  selectedTotalItems: number;
+  selectedTotalPrice: number;
+  isAllSelected: boolean;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<string[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: string) => {
-    setCart((prev) => (prev.includes(item) ? prev : [...prev, item]));
+  const addToCart = (item: Omit<CartItem, "quantity" | "selected">, qty = 1) => {
+    setCart((prev) => {
+      const existing = prev.find((i) => i.id === item.id);
+      if (existing) {
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + qty } : i
+        );
+      }
+      return [...prev, { ...item, quantity: qty, selected: false }];
+    });
   };
 
-  const removeFromCart = (item: string) => {
-    setCart((prev) => prev.filter((i) => i !== item));
+  const removeFromCart = (id: string) => {
+    setCart((prev) => prev.filter((i) => i.id !== id));
   };
 
-  const clearCart = () => {
-    setCart([]);
+  const updateQuantity = (id: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(id);
+      return;
+    }
+    setCart((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, quantity } : i))
+    );
   };
 
-  const isInCart = (item: string) => cart.includes(item);
+  const clearCart = () => setCart([]);
+
+  const toggleSelectItem = (id: string) => {
+    setCart((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, selected: !i.selected } : i))
+    );
+  };
+
+  const selectAllItems = (selected: boolean) => {
+    setCart((prev) => prev.map((i) => ({ ...i, selected })));
+  };
+
+  const removeSelectedFromCart = () => {
+    setCart((prev) => prev.filter((i) => !i.selected));
+  };
+
+  const isInCart = (id: string) => cart.some((i) => i.id === id);
+
+  const getQuantity = (id: string) =>
+    cart.find((i) => i.id === id)?.quantity ?? 0;
+
+  const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const totalPrice = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+  const selectedItems = cart.filter((i) => Boolean(i.selected));
+  const selectedTotalItems = selectedItems.reduce((sum, i) => sum + i.quantity, 0);
+  const selectedTotalPrice = selectedItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const isAllSelected = cart.length > 0 && cart.every((i) => Boolean(i.selected));
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, isInCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        isInCart,
+        getQuantity,
+        totalItems,
+        totalPrice,
+        toggleSelectItem,
+        selectAllItems,
+        removeSelectedFromCart,
+        selectedItems,
+        selectedTotalItems,
+        selectedTotalPrice,
+        isAllSelected,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
