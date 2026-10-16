@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "allwellhealthcare.com",
+      },
+      {
+        protocol: "https",
+        hostname: "allwell.co.th",
+      },
     ],
   },
   async redirects() {

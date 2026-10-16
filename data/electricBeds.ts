@@ -16,7 +16,7 @@ export const electricBeds: Product[] = [
   {
     id: 1,
     slug: "healthybed",
-    name: "Healthybed",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า Healthybed",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 45000,
     originalPrice: 119000,
@@ -52,7 +52,7 @@ export const electricBeds: Product[] = [
   {
     id: 2,
     slug: "komfortbed",
-    name: "Komfortbed",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า Komfortbed",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 42000,
     originalPrice: 119000,
@@ -66,7 +66,7 @@ export const electricBeds: Product[] = [
   {
     id: 3,
     slug: "ks-888",
-    name: "KS-888",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า KS-888",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 48000,
     originalPrice: 99000,
@@ -80,7 +80,7 @@ export const electricBeds: Product[] = [
   {
     id: 4,
     slug: "venta",
-    name: "VENTA",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า VENTA",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 180000,
     originalPrice: 429000,
@@ -94,7 +94,7 @@ export const electricBeds: Product[] = [
   {
     id: 5,
     slug: "pantographe-3-4",
-    name: "PANTOGRAPHE 3/4",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า PANTOGRAPHE 3/4",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 89000,
     originalPrice: 179000,
@@ -108,7 +108,7 @@ export const electricBeds: Product[] = [
   {
     id: 6,
     slug: "gs-828",
-    name: "GS-828",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า GS-828",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 59900,
     originalPrice: 119000,
@@ -122,7 +122,7 @@ export const electricBeds: Product[] = [
   {
     id: 7,
     slug: "dali-low-entry",
-    name: "DALI LOW ENTRY",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า DALI LOW ENTRY",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 70000,
     originalPrice: 169000,
@@ -136,7 +136,7 @@ export const electricBeds: Product[] = [
   {
     id: 8,
     slug: "libra",
-    name: "LIBRA",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า LIBRA",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 170000,
     originalPrice: 419000,
@@ -150,7 +150,7 @@ export const electricBeds: Product[] = [
   {
     id: 9,
     slug: "floore",
-    name: "FLOORE",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า FLOORE",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 149000,
     originalPrice: 299000,
@@ -164,7 +164,7 @@ export const electricBeds: Product[] = [
   {
     id: 10,
     slug: "resyone-plus",
-    name: "RESYONE PLUS",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า RESYONE PLUS",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 320000,
     originalPrice: 659000,
@@ -177,7 +177,7 @@ export const electricBeds: Product[] = [
   {
     id: 11,
     slug: "mobilia-cura-e-plus",
-    name: "MOBILIA CURA E PLUS",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า MOBILIA CURA E PLUS",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 380000,
     originalPrice: 799000,
@@ -191,7 +191,7 @@ export const electricBeds: Product[] = [
   {
     id: 12,
     slug: "evario-one",
-    name: "EVARIO ONE",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า EVARIO ONE",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 135000,
     originalPrice: 319000,
@@ -205,7 +205,7 @@ export const electricBeds: Product[] = [
   {
     id: 13,
     slug: "ks-828b",
-    name: "KS-828B",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า KS-828B",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 48000,
     originalPrice: 99000,
@@ -219,7 +219,7 @@ export const electricBeds: Product[] = [
   {
     id: 14,
     slug: "gracecare",
-    name: "GraceCare / GraceCare1R",
+    name: "เตียงผู้ป่วยปรับไฟฟ้า GraceCare / GraceCare1R",
     category: "เตียงผู้ป่วยไฟฟ้า",
     price: 45000,
     features: [

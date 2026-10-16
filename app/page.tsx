@@ -18,25 +18,21 @@ export default function Home() {
         <BannerCarousel />
 
         {/* Featured Products */}
-        <section id="products" className="py-16">
+        <section id="products" className="py-14">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-            <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-[#622576]">สินค้าแนะนำ</p>
-                <h2 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-3xl">เตียงผู้ป่วยไฟฟ้า</h2>
-                <p className="mt-2 text-zinc-500">คัดสรรเพื่อการดูแลที่บ้านอย่างมีคุณภาพ</p>
+                <h2 className="text-xl font-semibold text-zinc-900 sm:text-2xl">สินค้าแนะนำ</h2>
+                <p className="mt-1 text-sm text-zinc-400">คัดสรรเพื่อการดูแลที่บ้านอย่างมีคุณภาพ</p>
               </div>
               <Link
                 href="/products"
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#622576] px-5 py-2 text-sm font-semibold text-[#622576] transition-colors hover:bg-[#622576] hover:text-white"
+                className="text-sm font-medium text-[#622576] hover:underline underline-offset-4"
               >
-                ดูสินค้าทั้งหมด
-                <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12h14m-7-7 7 7-7 7" />
-                </svg>
+                ดูสินค้าทั้งหมด →
               </Link>
             </div>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {products.slice(0, 6).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -45,25 +41,21 @@ export default function Home() {
         </section>
 
         {/* Health Articles Preview */}
-        <section className="border-t border-zinc-100 bg-zinc-50 py-16">
+        <section className="border-t border-zinc-100 bg-zinc-50/60 py-14">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-            <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-[#622576]">บทความสุขภาพ</p>
-                <h2 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-3xl">คู่มือดูแลผู้ป่วย</h2>
-                <p className="mt-2 text-zinc-500">ข้อมูลที่เป็นประโยชน์สำหรับผู้ดูแลและครอบครัว</p>
+                <h2 className="text-xl font-semibold text-zinc-900 sm:text-2xl">บทความสุขภาพ</h2>
+                <p className="mt-1 text-sm text-zinc-400">ข้อมูลที่เป็นประโยชน์สำหรับผู้ดูแลและครอบครัว</p>
               </div>
               <Link
                 href="/health-articles"
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#622576] px-5 py-2 text-sm font-semibold text-[#622576] transition-colors hover:bg-[#622576] hover:text-white"
+                className="text-sm font-medium text-[#622576] hover:underline underline-offset-4"
               >
-                อ่านทั้งหมด
-                <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12h14m-7-7 7 7-7 7" />
-                </svg>
+                อ่านทั้งหมด →
               </Link>
             </div>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {featuredArticles.map((article) => (
                 <HealthArticleCard key={article.id} article={article} />
               ))}

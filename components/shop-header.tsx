@@ -26,19 +26,19 @@ function Icon({ children }: { children: ReactNode }) {
 export default function ShopHeader() {
   return (
     <header className="relative bg-gradient-to-r from-[#713487] via-[#6e2b84] to-[#622576] text-white">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-1 gap-y-3 px-3 py-4 sm:gap-x-6 sm:px-8 lg:min-h-[100px] lg:flex-nowrap lg:gap-x-9 lg:px-10 lg:py-0">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-1 gap-y-2.5 px-3 py-3 sm:gap-x-6 sm:gap-y-3 sm:px-8 sm:py-4 lg:min-h-[100px] lg:flex-nowrap lg:gap-x-9 lg:px-10 lg:py-0">
         <Link className="order-1 shrink-0 lg:order-none" href="/" aria-label="กลับหน้าแรก">
           <Image src="/logo.png" alt="Allwell" width={800} height={233} priority className="h-7 w-auto sm:h-12" />
         </Link>
 
         {/* Search bar — เหมือน home page */}
         <form
-          className="order-3 flex h-12 w-full min-w-0 items-center overflow-hidden rounded-full bg-white text-[#622576] shadow-sm lg:order-none lg:flex-1"
+          className="order-3 flex h-10 sm:h-12 w-full min-w-0 items-center overflow-hidden rounded-full bg-white text-[#622576] shadow-xs lg:order-none lg:flex-1"
           role="search"
           action="/search"
         >
           <input
-            className="h-full min-w-0 flex-1 border-0 px-5 text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
+            className="h-full min-w-0 flex-1 border-0 px-4 sm:px-5 text-xs sm:text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
             name="q"
             type="search"
             placeholder="ค้นหาสินค้า..."

@@ -63,21 +63,21 @@ export default function ProductDropdown() {
           <path d="m1 1 5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </summary>
-      <div onMouseEnter={cancelClose} className="absolute left-1/2 top-full z-50 max-h-[min(75vh,760px)] w-[min(1000px,calc(100vw-2rem))] -translate-x-1/2 overflow-y-auto rounded-b-2xl border border-[#ebdfee] bg-white p-6 text-left text-[#40184f] shadow-[0_20px_45px_rgba(42,24,75,0.16)]">
+      <div onMouseEnter={cancelClose} className="absolute left-1/2 top-full z-50 max-h-[min(75vh,760px)] w-[min(480px,calc(100vw-2rem))] -translate-x-1/2 overflow-y-auto rounded-b-2xl border border-[#ebdfee] bg-white p-6 text-left text-[#40184f] shadow-[0_20px_45px_rgba(42,24,75,0.16)]">
         <div className="flex items-center justify-between gap-4 border-b border-[#ebdfee] pb-4">
           <h2 className="text-lg font-bold">หมวดหมู่สินค้า</h2>
           <Link href="/products" onClick={closeMenu} className="rounded-lg px-3 py-2 text-sm font-semibold text-[#622576] hover:bg-[#f7f0f8] focus-visible:outline-2 focus-visible:outline-[#622576]">
             ดูสินค้าทั้งหมด
           </Link>
         </div>
-        <div className="mt-4 grid grid-cols-3 divide-x divide-[#ebdfee]">
+        <div className="mt-4">
           {categories.map((category) => (
-            <section key={category.id} className="min-w-0 px-5 first:pl-0 last:pr-0">
-              <h3 className="min-h-12 text-base font-bold leading-snug text-[#40184f]">{category.title}</h3>
-              <ul className="mt-2 space-y-0.5">
+            <section key={category.id} className="min-w-0">
+              <h3 className="text-base font-bold leading-snug text-[#40184f]">{category.title}</h3>
+              <ul className="mt-2 space-y-1">
                 {category.items.map((item) => (
                   <li key={item} className="rounded-lg text-sm leading-snug text-[#55435d] transition-colors duration-150 hover:bg-[#f7f0f8] hover:text-[#622576]">
-                    <Link href={`/products?category=${encodeURIComponent(item)}`} onClick={closeMenu} className="block px-3 py-1.5">
+                    <Link href={`/products?category=${encodeURIComponent(item)}`} onClick={closeMenu} className="block px-3 py-2">
                       {item}
                     </Link>
                   </li>

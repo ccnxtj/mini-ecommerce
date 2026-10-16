@@ -17,9 +17,14 @@ const prompt = Prompt({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://healthybed.co.th"),
-  title: "Healthybed | เตียงผู้ป่วยไฟฟ้าและอุปกรณ์ดูแลสุขภาพ",
+  title: {
+    default: "mini-ecommerce",
+    template: "%s | mini-ecommerce",
+  },
   description: "ศูนย์รวมเตียงผู้ป่วยไฟฟ้า ที่นอนป้องกันแผลกดทับ และอุปกรณ์ดูแลผู้สูงอายุมาตรฐานสากล",
 };
+
+import MobileBottomNav from "@/components/mobile-bottom-nav";
 
 export default function RootLayout({
   children,
@@ -34,8 +39,9 @@ export default function RootLayout({
             <CartProvider>
               <WishlistProvider>
                 <ToastProvider>
-                  <div className="flex-1">{children}</div>
+                  <div className="flex-1 pb-16 md:pb-0">{children}</div>
                   <ShopFooter />
+                  <MobileBottomNav />
                 </ToastProvider>
               </WishlistProvider>
             </CartProvider>

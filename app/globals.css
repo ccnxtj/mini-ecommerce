@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  line-height: 1.7;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

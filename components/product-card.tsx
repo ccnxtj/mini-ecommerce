@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
       : null;
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-shadow hover:shadow-md">
+    <article className="group flex flex-col overflow-hidden rounded-xl sm:rounded-2xl bg-white border border-zinc-200/80 transition-shadow hover:shadow-md">
       {/* รูปสินค้า */}
       <div className="relative">
         <Link href={`/products/${product.id}`} className="block">
@@ -20,43 +20,43 @@ export default function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             width={400}
             height={320}
-            className="aspect-[5/4] w-full object-cover bg-zinc-50"
+            className="aspect-[4/3] sm:aspect-[5/4] w-full object-cover bg-zinc-50"
           />
         </Link>
 
-        {/* Badges — ส่วนลด สีแดงสดใสตัดกับโทนเว็บ ไม่ม่วงกลืน */}
+        {/* Badge ส่วนลด */}
         {discountPct && (
-          <span className="pointer-events-none absolute left-3 top-3 rounded-md bg-rose-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-xs">
+          <span className="pointer-events-none absolute left-2 top-2 sm:left-3 sm:top-3 rounded bg-rose-500 px-1.5 py-0.5 text-[10px] sm:text-[11px] font-semibold text-white">
             -{discountPct}%
           </span>
         )}
 
-        {/* Wishlist */}
-        <div className="absolute right-3 top-3 z-20">
+        {/* Wishlist (Desktop Only) */}
+        <div className="hidden sm:block absolute right-2.5 top-2.5 z-20">
           <WishlistButton productName={product.name} compact />
         </div>
       </div>
 
       {/* ข้อมูลสินค้า */}
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs font-medium uppercase tracking-wide text-zinc-400">{product.categoryName || product.category}</p>
-        <h3 className="mt-1 text-base font-semibold text-zinc-900 leading-snug">{product.name}</h3>
+      <div className="flex flex-1 flex-col gap-2 p-2.5 sm:p-4">
+        <h3 className="text-xs sm:text-sm font-semibold text-zinc-800 leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
+          {product.name}
+        </h3>
 
-        <div className="mt-3 flex items-end gap-2">
-          <span className="text-lg font-bold text-rose-600">{formatPrice(product.price)}</span>
-          {product.originalPrice && (
-            <span className="mb-0.5 text-sm text-zinc-400 line-through">{formatPrice(product.originalPrice)}</span>
-          )}
-        </div>
-
-        <div className="mt-4 flex items-center justify-between gap-2">
-          <Link
-            href={`/products/${product.id}`}
-            className="text-sm font-semibold text-[#622576] hover:underline underline-offset-4"
-          >
-            ดูรายละเอียด
-          </Link>
-          <AddToCartHover product={product} />
+        <div className="mt-auto flex items-end justify-between gap-1.5">
+          <div className="min-w-0">
+            <span className="text-sm sm:text-base font-bold text-rose-600 block leading-tight truncate">
+              {formatPrice(product.price)}
+            </span>
+            {product.originalPrice && (
+              <span className="text-[11px] sm:text-xs text-zinc-400 line-through block mt-0.5 truncate">
+                {formatPrice(product.originalPrice)}
+              </span>
+            )}
+          </div>
+          <div className="hidden sm:block shrink-0">
+            <AddToCartHover product={product} />
+          </div>
         </div>
       </div>
     </article>

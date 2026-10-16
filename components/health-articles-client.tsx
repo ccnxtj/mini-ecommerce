@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import HealthArticleCard from "@/components/health-article-card";
 import { healthArticles, articleCategories } from "@/data/health-articles";
 
@@ -14,9 +13,6 @@ export default function HealthArticlesClient() {
       selectedCategory === "ทั้งหมด" || article.category === selectedCategory
     );
   }, [selectedCategory]);
-
-  const featuredArticle = selectedCategory === "ทั้งหมด" ? filteredArticles[0] : null;
-  const gridArticles = selectedCategory === "ทั้งหมด" ? filteredArticles.slice(1) : filteredArticles;
 
   return (
     <div className="pb-20">
@@ -56,44 +52,10 @@ export default function HealthArticlesClient() {
         })}
       </div>
 
-      {/* Featured Article */}
-      {featuredArticle && (
-        <div className="mb-12">
-          <Link
-            href={`/health-articles/${featuredArticle.id}`}
-            className="group grid md:grid-cols-2 gap-8 items-center"
-          >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-zinc-100">
-              <Image
-                src={featuredArticle.image}
-                alt={featuredArticle.title}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
-            </div>
-            <div>
-              <p className="text-xs text-[#622576] font-medium">{featuredArticle.category}</p>
-              <h2 className="mt-2 text-xl font-bold text-zinc-900 leading-snug group-hover:text-[#622576] transition-colors sm:text-2xl">
-                {featuredArticle.title}
-              </h2>
-              <p className="mt-3 text-sm text-zinc-500 leading-relaxed line-clamp-3">
-                {featuredArticle.summary}
-              </p>
-              <p className="mt-4 text-xs text-zinc-400">
-                {featuredArticle.author} · {featuredArticle.date}
-              </p>
-            </div>
-          </Link>
-          <div className="mt-10 border-t border-zinc-100" />
-        </div>
-      )}
-
-      {/* Articles Grid */}
-      {gridArticles.length > 0 ? (
+      {/* Articles Grid (3 Columns) */}
+      {filteredArticles.length > 0 ? (
         <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {gridArticles.map((article) => (
+          {filteredArticles.map((article) => (
             <HealthArticleCard key={article.id} article={article} />
           ))}
         </div>

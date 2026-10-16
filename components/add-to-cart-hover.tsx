@@ -41,15 +41,15 @@ export default function AddToCartHover({ product }: { product: Product }) {
       onClick={handleAddToCart}
       aria-label={isAdded ? "เพิ่มสำเร็จแล้ว" : "เพิ่มลงตะกร้า"}
       title={isAdded ? "เพิ่มสำเร็จแล้ว" : "เพิ่มลงตะกร้า (+1)"}
-      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white shadow-sm transition-all duration-200 active:scale-95 ${
+      className={`flex h-8 w-8 sm:h-9.5 sm:w-9.5 shrink-0 items-center justify-center rounded-full text-white shadow-xs transition-all duration-200 active:scale-95 ${
         isAdded
           ? "bg-emerald-600 scale-105"
-          : "bg-[#622576] hover:scale-110 hover:bg-[#58206c]"
+          : "bg-[#622576] hover:scale-105 hover:bg-[#58206c]"
       }`}
     >
       {isAdded ? (
         <svg
-          className="h-5 w-5 animate-[toast-in_0.2s_ease-out]"
+          className="h-4 w-4 sm:h-5 sm:w-5 animate-[toast-in_0.2s_ease-out]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -59,11 +59,11 @@ export default function AddToCartHover({ product }: { product: Product }) {
         </svg>
       ) : (
         <svg
-          className="h-5.5 w-5.5 transition-transform"
+          className="h-4.5 w-4.5 sm:h-5 sm:w-5 transition-transform"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth="2.5"
+          strokeWidth="2.4"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
         </svg>

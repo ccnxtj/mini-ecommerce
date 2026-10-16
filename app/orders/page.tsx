@@ -7,13 +7,47 @@ import Image from "next/image";
 import ShopHeader from "@/components/shop-header";
 import { useAuth } from "@/contexts/auth-context";
 import { useOrders, type Order } from "@/contexts/order-context";
-import { formatPrice } from "@/data/products";
+import { useCart } from "@/contexts/cart-context";
+import { useToast } from "@/contexts/toast-context";
+import { products, formatPrice } from "@/data/products";
 
 export default function OrdersPage() {
   const router = useRouter();
   const { user, isInitialized } = useAuth();
   const { orders } = useOrders();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [loadingOrderId, setLoadingOrderId] = useState<string | null>(null);
+
+  const handleReorder = async (order: Order) => {
+    if (loadingOrderId) return;
+    setLoadingOrderId(order.id);
+
+    try {
+      for (const item of order.items) {
+        const prod = products.find((p) => p.id === item.id);
+        addToCart(
+          {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            category: prod?.category || "สินค้าเพื่อสุขภาพ",
+          },
+          1
+        );
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 600));
+
+      toast("เพิ่มสินค้าลงในตะกร้าเรียบร้อยแล้ว", "success");
+      router.push("/cart");
+    } catch {
+      toast("เกิดข้อผิดพลาดในการสั่งซื้ออีกครั้ง", "error");
+      setLoadingOrderId(null);
+    }
+  };
 
   useEffect(() => {
     if (isInitialized && !user) {
@@ -77,15 +111,35 @@ export default function OrdersPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 flex justify-end">
+                  <div className="mt-6 flex items-center justify-end gap-3">
                     <button 
                       onClick={() => setSelectedOrder(order)}
-                      className="rounded-lg border border-[#ebdfee] px-4 py-2 text-sm font-semibold text-[#40184f] hover:bg-[#f7f0f8]"
+                      className="rounded-lg border border-[#ebdfee] px-4 py-2 text-sm font-semibold text-[#40184f] hover:bg-[#f7f0f8] transition-colors"
                     >
                       ดูรายละเอียด
                     </button>
-                    <button className="ml-3 rounded-lg bg-[#622576] px-4 py-2 text-sm font-semibold text-white hover:bg-[#58206c]">
-                      สั่งซื้ออีกครั้ง
+                    <button
+                      type="button"
+                      disabled={loadingOrderId === order.id}
+                      onClick={() => handleReorder(order)}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#622576] px-4 py-2 text-sm font-semibold text-white hover:bg-[#58206c] disabled:opacity-75 transition-all shadow-xs"
+                    >
+                      {loadingOrderId === order.id ? (
+                        <>
+                          <svg className="size-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                          </svg>
+                          <span>กำลังโหลด...</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                          </svg>
+                          <span>สั่งซื้ออีกครั้ง</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -164,6 +218,39 @@ export default function OrdersPage() {
                 <div className="mt-3 flex justify-between text-lg font-bold text-[#622576]">
                   <span>ยอดสุทธิ</span>
                   <span>{formatPrice(selectedOrder.total)}</span>
+                </div>
+
+                <div className="mt-5 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedOrder(null)}
+                    className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors"
+                  >
+                    ปิด
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleReorder(selectedOrder)}
+                    disabled={loadingOrderId === selectedOrder.id}
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#622576] py-2.5 text-sm font-semibold text-white hover:bg-[#58206c] disabled:opacity-75 transition-all shadow-xs"
+                  >
+                    {loadingOrderId === selectedOrder.id ? (
+                      <>
+                        <svg className="size-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        </svg>
+                        <span>กำลังโหลด...</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>สั่งซื้ออีกครั้ง</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             </div>

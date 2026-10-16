@@ -7,6 +7,7 @@ import WishlistButton from "@/components/wishlist-button";
 import AddToCartButton from "@/components/add-to-cart-button";
 import AllwellServiceBanner from "@/components/allwell-service-banner";
 import ProductFaqSection from "@/components/product-faq-section";
+import StickyProductBar from "@/components/sticky-product-bar";
 
 export const dynamicParams = false;
 
@@ -16,6 +17,9 @@ export function generateStaticParams() {
     params.push({ id: product.id });
     if (product.slug && product.slug !== product.id) {
       params.push({ id: product.slug });
+    }
+    if (product.numericId) {
+      params.push({ id: String(product.numericId) });
     }
   }
   return params;
@@ -27,21 +31,25 @@ export default async function ProductDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = products.find((item) => item.id === id || item.slug === id);
+  const product = products.find(
+    (item) => item.id === id || item.slug === id || (item.numericId && String(item.numericId) === id)
+  );
   if (!product) notFound();
 
   const discountPct =
-    product.originalPrice && product.originalPrice > product.price
+    product.discountPercent
+      ? Math.round(product.discountPercent)
+      : product.originalPrice && product.originalPrice > product.price
       ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
       : null;
 
   return (
     <>
       <ShopHeader />
-      <div className="bg-zinc-100 min-h-screen">
+      <div className="bg-zinc-100 min-h-screen pb-16 md:pb-0">
 
         {/* Breadcrumb */}
-        <div className="mx-auto max-w-6xl px-5 pt-4 pb-2 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-6xl px-4 pt-3 pb-2 sm:px-8 lg:px-10">
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-zinc-400">
             <Link href="/" className="hover:text-zinc-600">หน้าแรก</Link>
             <span aria-hidden="true">/</span>
@@ -52,47 +60,55 @@ export default async function ProductDetailPage({
         </div>
 
         {/* Product Hero */}
-        <div className="mx-auto max-w-6xl px-5 pb-4 sm:px-8 lg:px-10">
-          <div className="bg-white grid md:grid-cols-[420px_1fr] lg:grid-cols-[480px_1fr]">
+        <div className="mx-auto max-w-6xl px-3 pb-4 sm:px-8 lg:px-10">
+          <div className="bg-white grid md:grid-cols-[420px_1fr] lg:grid-cols-[480px_1fr] rounded-xl sm:rounded-2xl border border-zinc-200/80 overflow-hidden shadow-2xs">
 
             {/* รูปสินค้า */}
-            <div className="relative flex items-center justify-center border-r border-zinc-100 p-8">
+            <div className="relative flex items-center justify-center border-b md:border-b-0 md:border-r border-zinc-100 p-4 sm:p-6 lg:p-8">
               <Image
                 src={product.image}
                 alt={product.name}
                 width={420}
                 height={420}
-                className="max-h-[400px] w-full object-contain"
+                className="max-h-[320px] sm:max-h-[400px] w-full object-contain"
                 priority
               />
-              {discountPct && (
-                <span className="absolute left-0 top-0 bg-rose-500 px-2.5 py-1 text-xs font-bold text-white">
-                  -{discountPct}%
-                </span>
-              )}
             </div>
 
             {/* ข้อมูลสินค้า */}
-            <div className="flex flex-col p-8">
+            <div className="flex flex-col p-4 sm:p-6 lg:p-8">
 
-              {/* ชื่อ */}
-              <h1 className="text-xl font-semibold leading-snug text-zinc-900 sm:text-2xl">
+              {/* ชื่อสินค้า */}
+              <h1 className="text-lg font-bold leading-snug text-zinc-900 sm:text-2xl">
                 {product.name}
               </h1>
-              {product.shortDescription && (
-                <p className="mt-1 text-sm text-zinc-400">{product.shortDescription}</p>
-              )}
+
+              {/* รายละเอียดใต้ชื่อ */}
+              <div className="mt-2">
+                <span className="inline-flex items-center rounded-md bg-[#622576]/10 px-2.5 py-0.5 text-xs font-semibold text-[#622576]">
+                  {product.category === "เตียงผู้ป่วยไฟฟ้า"
+                    ? "เตียงผู้ป่วยปรับไฟฟ้า"
+                    : product.categoryName || product.category}
+                </span>
+              </div>
 
               {/* ราคา */}
-              <div className="mt-6 bg-zinc-50 -mx-8 px-8 py-5">
-                <div className="flex items-baseline gap-3">
-                  <span className="text-3xl font-bold text-rose-600">
+              <div className="mt-4 sm:mt-6 bg-zinc-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3.5 sm:py-5">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl sm:text-3xl font-bold text-rose-600">
                     {formatPrice(product.price)}
                   </span>
                   {product.originalPrice && product.originalPrice > product.price && (
-                    <span className="text-sm text-zinc-400 line-through">
-                      {formatPrice(product.originalPrice)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-zinc-400 line-through">
+                        {formatPrice(product.originalPrice)}
+                      </span>
+                      {discountPct && (
+                        <span className="rounded-[3px] bg-[#fef0ec] px-1.5 py-0.5 text-xs font-bold text-[#ee4d2d]">
+                          -{discountPct}%
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
                 {product.price >= 5000 && (
@@ -128,8 +144,8 @@ export default async function ProductDetailPage({
                 <p className="mt-4 text-xs text-zinc-400">อย.: {product.registration}</p>
               )}
 
-              {/* ปุ่ม */}
-              <div className="mt-auto pt-8 flex items-start gap-3">
+              {/* ปุ่มสั่งซื้อสำหรับ PC (บนมือถือย้ายไปรวมที่ Sticky Bottom Bar ด้านล่างจอ) */}
+              <div className="mt-auto pt-8 hidden md:flex items-start gap-3">
                 <WishlistButton productName={product.name} compact />
                 <div className="flex-1 min-w-0">
                   <AddToCartButton product={product} />
@@ -156,8 +172,8 @@ export default async function ProductDetailPage({
 
         {/* รายละเอียดสินค้า */}
         {(product.details || product.category === "เตียงผู้ป่วยไฟฟ้า") && (
-          <div className="mx-auto max-w-6xl px-5 pb-6 sm:px-8 lg:px-10">
-            <div className="bg-white p-8">
+          <div className="mx-auto max-w-6xl px-3 pb-6 sm:px-8 lg:px-10">
+            <div className="bg-white p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-zinc-200/80 shadow-2xs">
               <h2 className="mb-6 text-sm font-semibold uppercase tracking-wider text-zinc-500">
                 รายละเอียดสินค้า
               </h2>
@@ -199,6 +215,7 @@ export default async function ProductDetailPage({
 
       <AllwellServiceBanner />
       <ProductFaqSection />
+      <StickyProductBar product={product} />
     </>
   );
 }

@@ -5,8 +5,20 @@ export type Specification = {
   value: string;
 };
 
+export type ProductVariant = {
+  id: string;
+  color?: string;
+  colorCode?: string;
+  size?: string;
+  price?: number;
+  sku?: string;
+  stock?: number;
+};
+
 export type Product = {
   id: string;
+  numericId?: number;
+  sku?: string;
   slug?: string;
   name: string;
   shortName?: string;
@@ -14,7 +26,10 @@ export type Product = {
   categoryName?: string;
   brand?: string;
   price: number;
+  priceMin?: number;
+  priceMax?: number;
   originalPrice?: number;
+  discountPercent?: number;
   currency?: string;
   stockStatus?: string;
   warranty?: string | null;
@@ -25,11 +40,18 @@ export type Product = {
   description?: string;
   features: string[];
   suitableFor?: string[];
+  attributes?: Record<string, any>;
+  variants?: ProductVariant[];
+  careInstructions?: string[];
   specifications?: Specification[];
   tags?: string[];
   sourceUrl?: string;
+  productUrl?: string;
   details?: { title?: string; items: string[] }[];
   registration?: string;
+  rating?: number;
+  reviewCount?: number;
+  isMock?: boolean;
 };
 
 // ข้อมูลสินค้าที่เพิ่มเข้ามาใหม่
@@ -39,8 +61,8 @@ export const newProducts: Product[] = [
     slug: "bedside-armrest",
     name: "ราวกั้นเตียง ALLWELL BEDSIDE ARMREST",
     shortName: "BEDSIDE ARMREST",
-    category: "bedroom-accessories",
-    categoryName: "อุปกรณ์ข้างเตียง",
+    category: "ราวกั้นเตียง",
+    categoryName: "ราวกั้นเตียง",
     brand: "ALLWELL",
     price: 1990,
     originalPrice: 3360,
@@ -111,8 +133,8 @@ export const newProducts: Product[] = [
     slug: "clinik-3s-3m",
     name: "เตียงตรวจผู้ป่วยปรับไฟฟ้า CLINIK-3S-3M",
     shortName: "CLINIK-3S-3M",
-    category: "examination-bed",
-    categoryName: "เตียงตรวจผู้ป่วย",
+    category: "เตียงตรวจไฟฟ้า",
+    categoryName: "เตียงตรวจไฟฟ้า",
     brand: "ALLWELL",
     price: 66500,
     originalPrice: 124000,
@@ -165,8 +187,8 @@ export const newProducts: Product[] = [
     slug: "clinik-4s-5m",
     name: "เตียงตรวจผู้ป่วยปรับไฟฟ้า CLINIK-4S-5M",
     shortName: "CLINIK-4S-5M",
-    category: "examination-bed",
-    categoryName: "เตียงตรวจผู้ป่วย",
+    category: "เตียงตรวจไฟฟ้า",
+    categoryName: "เตียงตรวจไฟฟ้า",
     brand: "ALLWELL",
     price: 79000,
     originalPrice: 146000,
@@ -219,8 +241,8 @@ export const newProducts: Product[] = [
     slug: "clinik-bc-4m",
     name: "เตียงตรวจผู้ป่วยปรับไฟฟ้า CLINIK-BC-4M",
     shortName: "CLINIK-BC-4M",
-    category: "examination-bed",
-    categoryName: "เตียงตรวจผู้ป่วย",
+    category: "เตียงตรวจไฟฟ้า",
+    categoryName: "เตียงตรวจไฟฟ้า",
     brand: "ALLWELL",
     price: 80000,
     originalPrice: 160000,
@@ -274,8 +296,8 @@ export const newProducts: Product[] = [
     slug: "clinik-bf-4m",
     name: "เตียงตรวจผู้ป่วยปรับไฟฟ้า CLINIK-BF-4M",
     shortName: "CLINIK-BF-4M",
-    category: "examination-bed",
-    categoryName: "เตียงตรวจผู้ป่วย",
+    category: "เตียงตรวจไฟฟ้า",
+    categoryName: "เตียงตรวจไฟฟ้า",
     brand: "ALLWELL",
     price: 95000,
     originalPrice: 198000,
@@ -323,6 +345,232 @@ export const newProducts: Product[] = [
       },
     ],
   },
+
+  {
+    id: "allwell-microtex-sheet",
+    numericId: 1,
+    sku: "AW-MICROTEX-001",
+    slug: "microtex-sheet",
+    name: "ผ้าปูที่นอน Allwell Microtex Sheets",
+    shortName: "Microtex Sheets",
+    category: "เตียงผู้ป่วยและอุปกรณ์ในห้องนอน",
+    categoryName: "เตียงผู้ป่วยและอุปกรณ์ในห้องนอน",
+    brand: "ALLWELL",
+    description: "ผ้าปูที่นอนเนื้อ Microtex สัมผัสนุ่ม ลื่น เย็นสบาย แห้งเร็ว และไม่ยับง่าย",
+    shortDescription: "ผ้าปูที่นอนเนื้อ Microtex สัมผัสนุ่ม ลื่น เย็นสบาย แห้งเร็ว และไม่ยับง่าย",
+    price: 1090,
+    originalPrice: 2490,
+    currency: "THB",
+    discountPercent: 56.2,
+    stock: 50,
+    stockStatus: "in-stock",
+    image: "/products/allwell-microtex-sheet.jpg",
+    images: [
+      "/products/allwell-microtex-sheet.jpg",
+    ],
+    attributes: {
+      material: "Microtex",
+      threadCount: 350,
+      size: "3 ฟุต",
+      antiDustMite: true,
+      wrinkleResistant: true,
+      quickDry: true,
+      breathable: true,
+    },
+    variants: [
+      {
+        id: "MICRO-D1",
+        color: "เทาเข้ม",
+        colorCode: "#55565A",
+        sku: "AW-MICRO-D1",
+        stock: 20,
+      },
+      {
+        id: "MICRO-M1",
+        color: "ชมพู",
+        colorCode: "#E7A4B5",
+        sku: "AW-MICRO-M1",
+        stock: 15,
+      },
+      {
+        id: "MICRO-M2",
+        color: "ม่วงกะปิ",
+        colorCode: "#9A8299",
+        sku: "AW-MICRO-M2",
+        stock: 15,
+      },
+    ],
+    features: [
+      "เนื้อผ้า Microtex 350 เส้นด้าย",
+      "สัมผัสนุ่ม ลื่น เย็นสบาย",
+      "ระบายความร้อนได้ดี",
+      "ซักง่าย แห้งเร็ว ไม่ยับง่าย",
+    ],
+    careInstructions: [
+      "ซักมือหรือใช้โปรแกรมถนอมผ้า",
+      "ใช้อุณหภูมิไม่เกิน 40 องศาเซลเซียส",
+      "หลีกเลี่ยงการใช้สารฟอกขาวในปริมาณมาก",
+    ],
+    specifications: [
+      { label: "วัสดุเนื้อผ้า", value: "Microtex 350 เส้นด้าย" },
+      { label: "ขนาด", value: "3 ฟุต (สำหรับเตียงผู้ป่วย / เตียงเดี่ยว)" },
+      { label: "การป้องกันไรฝุ่น", value: "มีคุณสมบัติป้องกันไรฝุ่นและสารก่อภูมิแพ้" },
+      { label: "ตัวเลือกสี", value: "เทาเข้ม, ชมพู, ม่วงกะปิ" },
+      { label: "คุณสมบัติเด่น", value: "สัมผัสนุ่ม ลื่น เย็นสบาย แห้งเร็ว ไม่ยับง่าย" },
+    ],
+    tags: ["ผ้าปูที่นอน", "Microtex", "กันไรฝุ่น", "ผู้สูงอายุ", "ALLWELL"],
+    productUrl: "https://allwellhealthcare.com/product/microtex-sheet/",
+    sourceUrl: "https://allwellhealthcare.com/product/microtex-sheet/",
+    rating: 4.8,
+    reviewCount: 24,
+    isMock: true,
+    details: [
+      {
+        title: "รายละเอียดสินค้า",
+        items: [
+          "ผ้าปูที่นอนเนื้อ Microtex สัมผัสนุ่ม ลื่น เย็นสบาย แห้งเร็ว และไม่ยับง่าย",
+          "ทอด้วยความละเอียด 350 เส้นด้าย ให้สัมผัสที่นุ่มสบาย อ่อนโยนต่อผิว ไม่ระคายเคือง",
+          "ระบายความร้อนได้ดี ไม่สะสมเหงื่อ ช่วยให้นอนหลับสบายตลอดทั้งคืน",
+          "ซักทำความสะอาดง่าย แห้งไว ไม่ต้องรีด ประหยัดเวลาในการดูแลรักษา",
+        ],
+      },
+      {
+        title: "คุณสมบัติเด่น",
+        items: [
+          "เนื้อผ้า Microtex 350 เส้นด้าย",
+          "สัมผัสนุ่ม ลื่น เย็นสบาย",
+          "ระบายความร้อนได้ดี",
+          "ซักง่าย แห้งเร็ว ไม่ยับง่าย",
+        ],
+      },
+      {
+        title: "ตัวเลือกสี",
+        items: [
+          "เทาเข้ม (#55565A) — รหัส: AW-MICRO-D1 (สต็อก 20 ชิ้น)",
+          "ชมพู (#E7A4B5) — รหัส: AW-MICRO-M1 (สต็อก 15 ชิ้น)",
+          "ม่วงกะปิ (#9A8299) — รหัส: AW-MICRO-M2 (สต็อก 15 ชิ้น)",
+        ],
+      },
+      {
+        title: "คำแนะนำในการดูแลรักษา",
+        items: [
+          "ซักมือหรือใช้โปรแกรมถนอมผ้า",
+          "ใช้อุณหภูมิไม่เกิน 40 องศาเซลเซียส",
+          "หลีกเลี่ยงการใช้สารฟอกขาวในปริมาณมาก",
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "allwell-mattress-protector",
+    numericId: 2,
+    sku: "AW-MATTRESS-001",
+    slug: "mattress-protector",
+    name: "ผ้ารองกันเปื้อน ALLWELL ชนิดกันน้ำ",
+    shortName: "ผ้ารองกันเปื้อนกันน้ำ",
+    category: "เตียงผู้ป่วยและอุปกรณ์ในห้องนอน",
+    categoryName: "เตียงผู้ป่วยและอุปกรณ์ในห้องนอน",
+    brand: "ALLWELL",
+    description: "ผ้ารองกันเปื้อนที่นอน ช่วยป้องกันของเหลวซึมผ่าน ระบายอากาศ และทำความสะอาดง่าย",
+    shortDescription: "ผ้ารองกันเปื้อนที่นอน ช่วยป้องกันของเหลวซึมผ่าน ระบายอากาศ และทำความสะอาดง่าย",
+    price: 1490,
+    priceMin: 1490,
+    priceMax: 1650,
+    currency: "THB",
+    stock: 40,
+    stockStatus: "in-stock",
+    image: "/products/allwell-mattress-protector.jpg",
+    images: [
+      "/products/allwell-mattress-protector.jpg",
+    ],
+    attributes: {
+      waterproof: true,
+      breathable: true,
+      antiDustMite: true,
+      antiBacterial: true,
+      antiOdor: true,
+      easyToClean: true,
+    },
+    variants: [
+      {
+        id: "PROTECTOR-S",
+        size: "S",
+        price: 1490,
+        sku: "AW-PROTECTOR-S",
+        stock: 20,
+      },
+      {
+        id: "PROTECTOR-L",
+        size: "L",
+        price: 1650,
+        sku: "AW-PROTECTOR-L",
+        stock: 20,
+      },
+    ],
+    features: [
+      "ป้องกันของเหลวซึมผ่านที่นอน",
+      "ระบายอากาศ ลดความอับชื้น",
+      "เทคโนโลยี Anti-odor",
+      "ช่วยป้องกันไรฝุ่นและแบคทีเรีย",
+      "ทำความสะอาดง่ายและแห้งไว",
+    ],
+    suitableFor: [
+      "ผู้สูงอายุ",
+      "ผู้ป่วยติดเตียง",
+      "ผู้หญิงหลังคลอด",
+      "บุคคลทั่วไป",
+    ],
+    specifications: [
+      { label: "การกันน้ำ", value: "ป้องกันของเหลวซึมผ่านที่นอน 100%" },
+      { label: "การระบายอากาศ", value: "ระบายอากาศได้ดี ลดความอับชื้น" },
+      { label: "เทคโนโลยีการปกป้อง", value: "Anti-odor, ป้องกันไรฝุ่นและแบคทีเรีย" },
+      { label: "ขนาดที่มีให้เลือก", value: "ไซส์ S (1,490 บาท), ไซส์ L (1,650 บาท)" },
+      { label: "การดูแลรักษา", value: "ทำความสะอาดง่ายและแห้งไว" },
+    ],
+    tags: ["ผ้ารองกันเปื้อน", "ผ้ารองกันน้ำ", "ผู้ป่วยติดเตียง", "ผู้สูงอายุ", "ALLWELL"],
+    productUrl: "https://allwellhealthcare.com/product/mattress-protector/",
+    sourceUrl: "https://allwellhealthcare.com/product/mattress-protector/",
+    rating: 4.9,
+    reviewCount: 36,
+    isMock: true,
+    details: [
+      {
+        title: "รายละเอียดสินค้า",
+        items: [
+          "ผ้ารองกันเปื้อนที่นอน ช่วยป้องกันของเหลวซึมผ่าน ระบายอากาศ และทำความสะอาดง่าย",
+          "ช่วยปกป้องที่นอนจากคราบสกปรก ของเหลว ปัสสาวะ หรือเหงื่อไคล ยืดอายุการใช้งานที่นอน",
+          "เทคโนโลยี Anti-odor ช่วยลดกลิ่นไม่พึงประสงค์ และยับยั้งการเจริญเติบโตของแบคทีเรียและไรฝุ่น",
+        ],
+      },
+      {
+        title: "คุณสมบัติเด่น",
+        items: [
+          "ป้องกันของเหลวซึมผ่านที่นอน",
+          "ระบายอากาศ ลดความอับชื้น",
+          "เทคโนโลยี Anti-odor",
+          "ช่วยป้องกันไรฝุ่นและแบคทีเรีย",
+          "ทำความสะอาดง่ายและแห้งไว",
+        ],
+      },
+      {
+        title: "เหมาะสำหรับ",
+        items: [
+          "ผู้สูงอายุ",
+          "ผู้ป่วยติดเตียง",
+          "ผู้หญิงหลังคลอด",
+          "บุคคลทั่วไป",
+        ],
+      },
+      {
+        title: "ตัวเลือกไซส์และราคา",
+        items: [
+          "ไซส์ S: ราคา 1,490 บาท (รหัสสินค้า: AW-PROTECTOR-S, สต็อก 20 ชิ้น)",
+          "ไซส์ L: ราคา 1,650 บาท (รหัสสินค้า: AW-PROTECTOR-L, สต็อก 20 ชิ้น)",
+        ],
+      },
+    ],
+  },
 ];
 
 const sharedDetails = electricBeds[0].details;
@@ -331,6 +579,7 @@ const sharedDetails = electricBeds[0].details;
 export const products: Product[] = [
   ...electricBeds.map((bed) => ({
     id: bed.slug,
+    numericId: bed.id,
     slug: bed.slug,
     name: bed.name,
     shortName: bed.name,

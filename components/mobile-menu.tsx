@@ -4,8 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { categories } from "@/data/categories";
+import { products } from "@/data/products";
 
-const menuLinkClass = "flex min-h-12 items-center justify-between rounded-xl px-4 font-semibold text-[#40184f] hover:bg-[#f7f0f8] focus-visible:outline-2 focus-visible:outline-[#58206c]";
+const menuLinkClass =
+  "flex min-h-12 items-center justify-between rounded-xl px-4 font-semibold text-[#40184f] hover:bg-[#f7f0f8] focus-visible:outline-2 focus-visible:outline-[#58206c]";
 
 const otherLinks = [
   { href: "/promotions", label: "โปรโมชั่น" },
@@ -16,7 +18,6 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-
 
   useEffect(() => {
     if (!isOpen) return;
@@ -40,7 +41,12 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
   }, [isOpen]);
 
   return (
-    <nav className={`relative z-50 shrink-0 lg:hidden ${inline ? "" : "order-2 ml-auto"}`} aria-label="เมนูหลักบนมือถือ">
+    <nav
+      className={`relative z-50 shrink-0 lg:hidden ${
+        inline ? "" : "order-2 ml-auto"
+      }`}
+      aria-label="เมนูหลักบนมือถือ"
+    >
       <button
         ref={triggerRef}
         type="button"
@@ -63,16 +69,26 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
         inert={!isOpen}
         tabIndex={-1}
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 z-40 bg-[#211431]/55 transition-opacity duration-300 motion-reduce:transition-none ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-40 bg-[#211431]/55 transition-opacity duration-300 motion-reduce:transition-none ${
+          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
       />
       <div
         id="mobile-navigation-panel"
         inert={!isOpen}
         aria-hidden={!isOpen}
-        className={`fixed inset-y-0 left-0 z-50 flex w-[min(22rem,88vw)] flex-col bg-white text-[#40184f] shadow-[18px_0_55px_rgba(26,15,45,0.22)] transition-transform duration-300 ease-out motion-reduce:transition-none ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[min(22rem,88vw)] flex-col bg-white text-[#40184f] shadow-[18px_0_55px_rgba(26,15,45,0.22)] transition-transform duration-300 ease-out motion-reduce:transition-none ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="flex items-center justify-between bg-[#58206c] px-5 py-5 text-white">
-          <Image src="/logo.png" alt="Allwell" width={800} height={233} className="h-9 w-auto sm:h-12" />
+          <Image
+            src="/logo.png"
+            alt="Allwell"
+            width={800}
+            height={233}
+            className="h-9 w-auto sm:h-12"
+          />
           <button
             ref={closeRef}
             type="button"
@@ -88,35 +104,82 @@ export default function MobileMenu({ inline = false }: { inline?: boolean }) {
         </div>
         <div className="flex-1 overflow-y-auto px-3 py-4 text-base">
           <div className="grid gap-1">
-            <Link href="/" onClick={() => setIsOpen(false)} className={menuLinkClass}>หน้าแรก</Link>
-            <Link href="/products" onClick={() => setIsOpen(false)} className={menuLinkClass}>สินค้า</Link>
-            <details className="group/products rounded-xl bg-[#f7f0f8]">
+            <Link
+              href="/"
+              onClick={() => setIsOpen(false)}
+              className={menuLinkClass}
+            >
+              หน้าแรก
+            </Link>
+            <Link
+              href="/products"
+              onClick={() => setIsOpen(false)}
+              className={menuLinkClass}
+            >
+              สินค้า
+            </Link>
+
+            {/* หมวดหมู่สินค้าที่มีในสต็อกจริง */}
+            <details className="group/products rounded-xl bg-[#f7f0f8]" open>
               <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 font-bold text-[#40184f] hover:bg-[#f0e3f2] focus-visible:outline-2 focus-visible:outline-[#58206c] [&::-webkit-details-marker]:hidden">
-                หมวดหมู่ <span className="text-xl leading-none text-[#58206c] transition-transform group-open/products:rotate-45" aria-hidden="true">+</span>
+                หมวดหมู่สินค้า{" "}
+                <span
+                  className="text-xl leading-none text-[#58206c] transition-transform group-open/products:rotate-45"
+                  aria-hidden="true"
+                >
+                  +
+                </span>
               </summary>
               <div className="space-y-1 px-2 pb-2">
-                <Link href="/products" onClick={() => setIsOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold text-[#622576] hover:bg-white">สินค้าทั้งหมด</Link>
+                <Link
+                  href="/products"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold text-[#622576] hover:bg-white transition-colors"
+                >
+                  <span>สินค้าทั้งหมด</span>
+                  <span className="text-xs text-zinc-400">
+                    ({products.length})
+                  </span>
+                </Link>
+
                 {categories.map((category) => (
-                  <div key={category.id} className="pb-1">
-                    <p className="flex min-h-10 items-center gap-2 px-3 py-2 text-sm font-bold text-[#40184f]">
-                      <span aria-hidden="true">•</span>{category.title}
-                    </p>
-                    {category.items.map((item) => (
-                      <Link
-                        key={item}
-                        href={`/products?category=${encodeURIComponent(item)}`}
-                        onClick={() => setIsOpen(false)}
-                        className="ml-6 block rounded-lg px-3 py-2 text-sm text-[#69576e] hover:bg-white hover:text-[#622576]"
-                      >
-                        {item}
-                      </Link>
-                    ))}
+                  <div key={category.id} className="pt-1">
+                    {category.items.map((item) => {
+                      const count = products.filter(
+                        (p) =>
+                          p.category === item || p.categoryName === item
+                      ).length;
+                      return (
+                        <Link
+                          key={item}
+                          href={`/products?category=${encodeURIComponent(
+                            item
+                          )}`}
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-[#55435d] hover:bg-white hover:text-[#622576] transition-colors"
+                        >
+                          <span className="flex items-center gap-2 truncate">
+                            <span className="text-xs text-[#622576]">▸</span>
+                            <span className="truncate">{item}</span>
+                          </span>
+                          <span className="text-xs text-zinc-400 shrink-0 ml-1.5">
+                            ({count})
+                          </span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 ))}
               </div>
             </details>
+
             {otherLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={menuLinkClass}>
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={menuLinkClass}
+              >
                 {link.label}
               </Link>
             ))}
