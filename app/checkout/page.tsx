@@ -85,6 +85,7 @@ export default function CheckoutPage() {
         name: p.name,
         price: p.price,
         image: p.image,
+        quantity: p.quantity,
       })),
       total: total > 0 ? total : 0,
       status: status
@@ -349,9 +350,9 @@ export default function CheckoutPage() {
                       <Image src={p.image} alt={p.name} width={48} height={48} className="h-12 w-12 rounded-lg border border-zinc-200 object-cover bg-zinc-50" />
                       <div className="flex-1 min-w-0">
                         <p className="truncate text-sm font-semibold text-zinc-900">{p.name}</p>
-                        <p className="text-xs text-zinc-500">1 ชิ้น</p>
+                        <p className="text-xs text-zinc-500">{p.quantity} ชิ้น</p>
                       </div>
-                      <p className="font-bold text-[#622576]">{formatPrice(p.price)}</p>
+                      <p className="font-bold text-[#622576]">{formatPrice(p.price * p.quantity)}</p>
                     </div>
                   ))
                 )}

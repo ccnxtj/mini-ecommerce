@@ -81,7 +81,7 @@ export default function AccountIcon() {
         </button>
 
         {isOpen && (
-          <div className="absolute left-0 top-full mt-2 w-60 origin-top-left rounded-xl bg-white py-2 text-zinc-800 shadow-xl ring-1 ring-black/5 z-50">
+          <div className="absolute right-0 top-full mt-2 w-60 origin-top-right rounded-xl bg-white py-2 text-zinc-800 shadow-xl ring-1 ring-black/5 z-50">
             <div className="border-b border-zinc-100 px-4 py-3">
               <p className="truncate text-sm font-semibold">{user.name}</p>
               <p className="truncate text-xs text-zinc-500">{user.email}</p>

@@ -8,6 +8,7 @@ export type OrderItem = {
   name: string;
   price: number;
   image: string;
+  quantity?: number;
 };
 
 export type Order = {

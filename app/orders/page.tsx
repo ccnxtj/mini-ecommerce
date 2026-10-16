@@ -35,7 +35,7 @@ export default function OrdersPage() {
             image: item.image,
             category: prod?.category || "สินค้าเพื่อสุขภาพ",
           },
-          1
+          item.quantity || 1
         );
       }
 
@@ -105,9 +105,9 @@ export default function OrdersPage() {
                           <Link href={`/products/${item.id}`} className="block truncate font-bold text-[#40184f] hover:underline">
                             {item.name}
                           </Link>
-                          <p className="text-sm text-[#69576e]">จำนวน: 1</p>
+                          <p className="text-sm text-[#69576e]">จำนวน: {item.quantity || 1}</p>
                         </div>
-                        <p className="font-bold text-[#622576]">{formatPrice(item.price)}</p>
+                        <p className="font-bold text-[#622576]">{formatPrice(item.price * (item.quantity || 1))}</p>
                       </div>
                     ))}
                   </div>
@@ -192,16 +192,18 @@ export default function OrdersPage() {
                 </div>
               </div>
 
-              <h3 className="mb-3 font-bold text-zinc-900">รายการสินค้า ({selectedOrder.items.length} ชิ้น)</h3>
+              <h3 className="mb-3 font-bold text-zinc-900">
+                รายการสินค้า ({selectedOrder.items.reduce((sum, item) => sum + (item.quantity || 1), 0)} ชิ้น)
+              </h3>
               <div className="space-y-3">
                 {selectedOrder.items.map(item => (
                   <div key={item.id} className="flex items-center gap-3 border-b border-zinc-100 pb-3 last:border-0 last:pb-0">
                     <Image src={item.image} alt={item.name} width={60} height={60} className="h-12 w-12 rounded-lg border border-zinc-200 object-cover" />
                     <div className="flex-1 min-w-0">
                       <p className="truncate text-sm font-bold text-zinc-900">{item.name}</p>
-                      <p className="text-xs text-zinc-500">1 ชิ้น</p>
+                      <p className="text-xs text-zinc-500">{item.quantity || 1} ชิ้น</p>
                     </div>
-                    <p className="font-bold text-[#622576]">{formatPrice(item.price)}</p>
+                    <p className="font-bold text-[#622576]">{formatPrice(item.price * (item.quantity || 1))}</p>
                   </div>
                 ))}
               </div>

@@ -53,11 +53,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={{ toast }}>
       {children}
-      {/* Toast container */}
+      {/* Toast container (ซ่อนในมุมมองมือถือ เอาออกตามความต้องการ) */}
       <div
         aria-live="polite"
         aria-label="การแจ้งเตือน"
-        className="pointer-events-none fixed bottom-6 right-4 z-[9999] flex flex-col gap-2 sm:right-6"
+        className="pointer-events-none fixed bottom-6 right-6 z-[9999] hidden sm:flex flex-col gap-2"
       >
         {toasts.map((t) => (
           <div

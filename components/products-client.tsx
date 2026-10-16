@@ -74,7 +74,7 @@ export default function ProductsClient() {
       );
 
     return result;
-  }, [selectedCategory, priceRange, sort]);
+  }, [selectedCategory, priceRange, sort, searchQuery]);
 
   // ซ่อนหมวดหมู่อื่นๆ ไว้ก่อน เอาเฉพาะที่มีใน mockdata จริง
   const availableCategoryGroups = useMemo(() => {
@@ -102,8 +102,8 @@ export default function ProductsClient() {
 
   const renderFilterContent = () => (
     <div className="space-y-4">
-      {/* Shopee-style Category Header */}
-      <div className="flex items-center gap-2.5 pb-4 border-b border-zinc-100">
+      {/* Shopee-style Category Header (แสดงเฉพาะบน Desktop เพราะบน Mobile มีหัวของ Modal แล้ว) */}
+      <div className="hidden lg:flex items-center gap-2.5 pb-4 border-b border-zinc-100">
         <svg
           className="size-5 text-[#622576]"
           fill="none"
@@ -266,6 +266,43 @@ export default function ProductsClient() {
             </div>
           );
         })}
+
+        {/* กรองตามช่วงราคา */}
+        <div className="pt-3 border-t border-zinc-100">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 px-3 py-1 mb-1">
+            ช่วงราคา
+          </h3>
+          <div className="space-y-1">
+            {PRICE_RANGES.map((r, i) => {
+              const isSelected = priceRange === i;
+              return (
+                <button
+                  key={r.label}
+                  type="button"
+                  onClick={() => setPriceRange(i)}
+                  className={`group flex w-full items-center justify-between text-left py-2 px-3 rounded-xl text-sm transition-all ${
+                    isSelected
+                      ? "bg-[#fbf6fc] font-bold text-[#622576]"
+                      : "text-zinc-700 hover:bg-zinc-50 hover:text-[#622576]"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span
+                      className={`size-3.5 rounded-full border flex items-center justify-center transition-colors ${
+                        isSelected
+                          ? "border-[#622576] bg-[#622576]"
+                          : "border-zinc-300 bg-white"
+                      }`}
+                    >
+                      {isSelected && <span className="size-1.5 rounded-full bg-white" />}
+                    </span>
+                    <span>{r.label}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -295,7 +332,7 @@ export default function ProductsClient() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
           </svg>
           <span className="truncate">
-            ตัวกรอง {selectedCategory !== "สินค้าทั้งหมด" ? `(${selectedCategory})` : ""}
+            ตัวกรอง{selectedCategory !== "สินค้าทั้งหมด" || priceRange > 0 ? ` (${[selectedCategory !== "สินค้าทั้งหมด" ? selectedCategory : null, priceRange > 0 ? PRICE_RANGES[priceRange].label : null].filter(Boolean).join(", ")})` : ""}
           </span>
         </button>
 

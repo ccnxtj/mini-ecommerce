@@ -1,14 +1,12 @@
 "use client";
 
 import { useCart } from "@/contexts/cart-context";
-import { useToast } from "@/contexts/toast-context";
-import { formatPrice, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 import WishlistButton from "@/components/wishlist-button";
 import { useState } from "react";
 
 export default function StickyProductBar({ product }: { product: Product }) {
   const { addToCart } = useCart();
-  const { toast } = useToast();
   const [qty, setQty] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
 
@@ -23,7 +21,6 @@ export default function StickyProductBar({ product }: { product: Product }) {
       },
       qty
     );
-    toast(`เพิ่ม "${product.name}" ลงในตะกร้าแล้ว (${qty} ชิ้น)`, "success");
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 1200);
   };
@@ -77,14 +74,14 @@ export default function StickyProductBar({ product }: { product: Product }) {
               <svg className="size-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <span className="truncate">เพิ่มแล้ว ({qty})!</span>
+              <span className="truncate">เพิ่มแล้ว</span>
             </>
           ) : (
             <>
               <svg className="size-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              <span className="truncate">เพิ่มลงตะกร้า • {formatPrice(product.price * qty)}</span>
+              <span className="truncate">เพิ่มลงตะกร้า</span>
             </>
           )}
         </button>

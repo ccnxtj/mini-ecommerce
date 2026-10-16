@@ -11,7 +11,7 @@ export default function PromotionsPage() {
   return (
     <div className="min-h-screen bg-white">
       <ShopHeader />
-      <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
+      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-8 sm:py-8 lg:px-10">
         <PromotionsClient />
       </main>
     </div>
