@@ -50,10 +50,10 @@ export default function CartGrid() {
   }, [cart]);
 
   const recommendedSection = (
-    <section className="mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-zinc-150">
-      <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+    <section className="mt-6 sm:mt-12 pt-6 sm:pt-8 border-t border-[#622576]/10">
+      <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
         <div>
-          <h2 className="text-base sm:text-xl font-bold text-zinc-900">
+          <h2 className="text-base sm:text-xl font-bold text-[#40184f]">
             สินค้าที่คุณอาจจะชอบ
           </h2>
           <p className="mt-1 text-xs sm:text-sm text-zinc-500">
@@ -82,22 +82,22 @@ export default function CartGrid() {
   if (cart.length === 0) {
     return (
       <>
-        <div className="mt-6 sm:mt-8 rounded-2xl border border-zinc-100 bg-white py-12 sm:py-16 px-4 sm:px-6 text-center shadow-xs">
-          <div className="mx-auto flex size-16 sm:size-20 items-center justify-center rounded-2xl bg-purple-50 text-[#622576] mb-4 sm:mb-5 ring-1 ring-purple-100">
-            <svg className="size-8 sm:size-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+        <div className="mt-3 sm:mt-6 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#fbf7fc] via-[#fdfbfe] to-white border border-[#622576]/10 py-6 sm:py-9 px-4 sm:px-6 text-center shadow-xs">
+          <div className="mx-auto flex size-12 sm:size-14 items-center justify-center rounded-full bg-white text-[#622576] mb-3 shadow-2xs ring-4 ring-[#622576]/5">
+            <svg className="size-6 sm:size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25c-.669 0-1.189-.578-1.119-1.243l1.263-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
             </svg>
           </div>
-          <p className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight">ตะกร้าของคุณยังว่างอยู่</p>
-          <p className="mt-2 text-xs sm:text-sm text-zinc-500 max-w-sm mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg font-bold text-[#40184f] tracking-tight">ตะกร้าของคุณยังว่างอยู่</p>
+          <p className="mt-1 text-xs sm:text-sm text-zinc-500 max-w-xs sm:max-w-sm mx-auto leading-relaxed">
             เลือกดูสินค้าที่คุณสนใจ แล้วเพิ่มลงในตะกร้าเพื่อเริ่มสั่งซื้อได้เลย
           </p>
           <Link
             href="/products"
-            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#622576] px-6 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-[#521e64] transition-all hover:gap-2.5"
+            className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#622576] px-5 py-2 text-xs sm:text-sm font-semibold text-white shadow-xs hover:bg-[#521e64] hover:shadow-sm active:scale-95 transition-all"
           >
             <span>เลือกซื้อสินค้า</span>
-            <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg className="size-3.5 sm:size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </Link>
