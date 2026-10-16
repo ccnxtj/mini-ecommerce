@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ShopHeader from "@/components/shop-header";
 import CartGrid from "@/components/cart-grid";
+
+export const metadata: Metadata = {
+  title: "ตะกร้าสินค้า",
+  description: "ตะกร้าสินค้าของคุณ",
+};
 
 export default function CartPage() {
   return (

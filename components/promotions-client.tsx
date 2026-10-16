@@ -13,20 +13,20 @@ export default function PromotionsClient() {
   return (
     <div className="pb-20">
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-zinc-400">
-        <Link href="/" className="hover:text-zinc-700 transition-colors">
+      <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-zinc-500">
+        <Link href="/" className="hover:text-zinc-800 transition-colors">
           หน้าแรก
         </Link>
         <span aria-hidden="true" className="text-zinc-300">/</span>
-        <span className="text-zinc-600">โปรโมชั่น</span>
+        <span className="font-medium text-zinc-900">โปรโมชั่น</span>
       </nav>
 
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
-          สินค้าโปรโมชั่น
+          โปรโมชั่น
         </h1>
-        <p className="mt-1.5 text-sm text-zinc-500">
+        <p className="mt-1.5 text-sm sm:text-base text-zinc-500">
           รวมรายการสินค้าลดราคาพิเศษ พร้อมสิทธิ์ผ่อนชำระ 0% และบริการจัดส่งติดตั้งฟรี
         </p>
       </div>

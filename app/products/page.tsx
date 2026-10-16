@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import ShopHeader from "@/components/shop-header";
 import ProductsClient from "@/components/products-client";
+
+export const metadata: Metadata = {
+  title: "สินค้า",
+  description: "ศูนย์รวมเตียงผู้ป่วยไฟฟ้า ที่นอนป้องกันแผลกดทับ และอุปกรณ์ดูแลผู้สูงอายุมาตรฐานสากล",
+};
 
 export default function ProductsPage() {
   return (

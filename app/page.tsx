@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "@/components/product-card";
 import BannerCarousel from "@/components/banner-carousel";
@@ -5,6 +6,11 @@ import ShopHeader from "@/components/shop-header";
 import { products } from "@/data/products";
 import { healthArticles } from "@/data/health-articles";
 import HealthArticleCard from "@/components/health-article-card";
+
+export const metadata: Metadata = {
+  title: "หน้าแรก",
+  description: "ศูนย์รวมเตียงผู้ป่วยไฟฟ้า ที่นอนป้องกันแผลกดทับ และอุปกรณ์ดูแลผู้สูงอายุมาตรฐานสากล",
+};
 
 export default function Home() {
   const featuredArticles = healthArticles.slice(0, 3);

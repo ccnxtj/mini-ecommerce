@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import ShopHeader from "@/components/shop-header";
 import HealthArticlesClient from "@/components/health-articles-client";
+
+export const metadata: Metadata = {
+  title: "บทความสุขภาพ",
+  description: "สาระความรู้เพื่อการดูแลผู้ป่วยและผู้สูงอายุ",
+};
 
 export default function HealthArticlesPage() {
   return (

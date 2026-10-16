@@ -3,7 +3,7 @@ import ShopHeader from "@/components/shop-header";
 import PromotionsClient from "@/components/promotions-client";
 
 export const metadata: Metadata = {
-  title: "โปรโมชั่นและสิทธิพิเศษ",
+  title: "โปรโมชั่น",
   description: "รวมโปรโมชั่น ส่วนลด และข้อเสนอพิเศษสำหรับเตียงผู้ป่วยไฟฟ้าและอุปกรณ์ดูแลสุขภาพ",
 };
 

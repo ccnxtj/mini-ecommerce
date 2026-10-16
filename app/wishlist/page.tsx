@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ShopHeader from "@/components/shop-header";
 import WishlistGrid from "@/components/wishlist-grid";
+
+export const metadata: Metadata = {
+  title: "สินค้าที่ชื่นชอบ",
+  description: "รายการสินค้าที่คุณกดหัวใจเก็บไว้",
+};
 
 export default function WishlistPage() {
   return (
