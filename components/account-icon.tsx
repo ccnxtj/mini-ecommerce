@@ -27,7 +27,7 @@ export default function AccountIcon() {
       <Link
         href="/login"
         aria-label="Login"
-        className="grid size-9 sm:size-10 place-items-center rounded-full hover:bg-white/10 pointer-events-none lg:pointer-events-auto cursor-default lg:cursor-pointer select-none"
+        className="grid size-9 sm:size-10 place-items-center rounded-full hover:bg-white/10 active:scale-95 transition-transform"
       >
         <svg
           className="size-5 sm:size-6"
