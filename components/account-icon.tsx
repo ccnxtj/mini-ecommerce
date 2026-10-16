@@ -27,7 +27,7 @@ export default function AccountIcon() {
       <Link
         href="/login"
         aria-label="Login"
-        className="grid size-9 sm:size-10 place-items-center rounded-full hover:bg-white/10"
+        className="grid size-9 sm:size-10 place-items-center rounded-full hover:bg-white/10 pointer-events-none lg:pointer-events-auto cursor-default lg:cursor-pointer select-none"
       >
         <svg
           className="size-5 sm:size-6"
@@ -61,9 +61,13 @@ export default function AccountIcon() {
     <>
       <div className="relative flex items-center" ref={ref}>
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => {
+            if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+              setIsOpen(!isOpen);
+            }
+          }}
           aria-label="Account Menu"
-          className="grid size-9 sm:size-10 place-items-center rounded-full hover:bg-white/10"
+          className="grid size-9 sm:size-10 place-items-center rounded-full hover:bg-white/10 pointer-events-none lg:pointer-events-auto cursor-default lg:cursor-pointer select-none"
         >
           {user.picture ? (
             <Image
@@ -81,7 +85,7 @@ export default function AccountIcon() {
         </button>
 
         {isOpen && (
-          <div className="absolute right-0 top-full mt-2 w-60 origin-top-right rounded-xl bg-white py-2 text-zinc-800 shadow-xl ring-1 ring-black/5 z-50">
+          <div className="hidden lg:block absolute right-0 top-full mt-2 w-60 origin-top-right rounded-xl bg-white py-2 text-zinc-800 shadow-xl ring-1 ring-black/5 z-50">
             <div className="border-b border-zinc-100 px-4 py-3">
               <p className="truncate text-sm font-semibold">{user.name}</p>
               <p className="truncate text-xs text-zinc-500">{user.email}</p>

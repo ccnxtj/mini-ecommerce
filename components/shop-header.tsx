@@ -57,9 +57,7 @@ export default function ShopHeader() {
         </form>
 
         <div className="order-2 ml-auto flex shrink-0 items-center gap-1 sm:gap-2 [&>a]:grid [&>a]:size-9 sm:[&>a]:size-10 [&>a]:place-items-center [&>a]:rounded-full [&>a]:hover:bg-white/10 [&_svg]:size-5 sm:[&_svg]:size-6 sm:gap-3 lg:order-none lg:gap-4">
-          <div className="hidden lg:block">
-            <AccountIcon />
-          </div>
+          <AccountIcon />
           <Link className="relative" href="/wishlist" aria-label="Wishlist">
             <Icon>
               <path d="M20.5 8.4c0 4.1-8.5 10-8.5 10s-8.5-5.9-8.5-10a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2Z" />
