@@ -1,4 +1,40 @@
+/* Hallmark · design-system: DESIGN.md · genre: modern-minimal · mobile: pass (34, 50) */
 @import "tailwindcss";
+
+@theme {
+  --color-brand-purple: #6e2b84;
+  --color-brand-purple-dark: #622576;
+  --color-brand-purple-light: #713487;
+  --color-brand-purple-hover: #58206c;
+  --color-brand-purple-tint: #fbf4fc;
+  --color-brand-purple-subtle: #f5e7f7;
+
+  --color-primary: #6e2b84;
+  --color-primary-dark: #622576;
+  --color-primary-light: #713487;
+  --color-primary-hover: #58206c;
+  --color-primary-tint: #fbf4fc;
+
+  --color-accent-discount: #f43f5e;
+  --color-accent-price: #e11d48;
+  --color-status-success: #059669;
+  --color-neutral-bg: #fcfbfe;
+  --color-neutral-surface: #faf9fb;
+  --color-neutral-border: #e4e4e7;
+  --color-text-heading: #18181b;
+  --color-text-body: #27272a;
+  --color-text-muted: #71717a;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--color-brand-purple);
+  color: #ffffff;
+}
 
 body {
   line-height: 1.6;
@@ -58,3 +94,42 @@ body {
 .animate-slide-in-left {
   animation: slide-in-left 250ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes modal-pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes icon-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  65% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes stroke-draw {
+  0% { stroke-dashoffset: 60; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.animate-modal-pop {
+  animation: modal-pop 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-icon-pop {
+  animation: icon-pop 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-stroke-draw {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: stroke-draw 0.35s ease-out 0.12s forwards;
+}
+

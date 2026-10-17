@@ -41,10 +41,10 @@ export default function AddToCartHover({ product }: { product: Product }) {
       onClick={handleAddToCart}
       aria-label={isAdded ? "เพิ่มสำเร็จแล้ว" : "เพิ่มลงตะกร้า"}
       title={isAdded ? "เพิ่มสำเร็จแล้ว" : "เพิ่มลงตะกร้า (+1)"}
-      className={`flex h-8 w-8 sm:h-9.5 sm:w-9.5 shrink-0 items-center justify-center rounded-full text-white shadow-xs transition-all duration-200 active:scale-95 ${
+      className={`flex size-9 sm:size-9.5 shrink-0 items-center justify-center rounded-full text-white shadow-xs transition-all duration-200 active:scale-95 cursor-pointer ${
         isAdded
           ? "bg-emerald-600 scale-105"
-          : "bg-[#622576] hover:scale-105 hover:bg-[#58206c]"
+          : "bg-brand-purple hover:scale-105 hover:bg-brand-purple-hover"
       }`}
     >
       {isAdded ? (

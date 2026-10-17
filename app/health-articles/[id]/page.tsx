@@ -55,7 +55,7 @@ export default async function HealthArticleDetailPage({
     <div className="min-h-screen bg-white">
       <ShopHeader />
 
-      <main className="mx-auto max-w-3xl px-5 py-8 sm:px-6">
+      <main className="mx-auto max-w-3xl px-5 py-8 sm:px-6 overflow-x-clip">
         {/* Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ShopHeader from "@/components/shop-header";
 import PromotionsClient from "@/components/promotions-client";
+import AllwellServiceBanner from "@/components/allwell-service-banner";
 
 export const metadata: Metadata = {
   title: "โปรโมชั่น",
@@ -14,6 +15,9 @@ export default function PromotionsPage() {
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-8 sm:py-8 lg:px-10">
         <PromotionsClient />
       </main>
+      {/* ALLWELL ดูแลก่อนและหลังการขายแบบครบวงจร (ส่งและติดตั้งฟรี, รับประกัน, ศูนย์บริการ) */}
+      <AllwellServiceBanner />
     </div>
   );
 }
+

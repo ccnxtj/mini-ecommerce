@@ -31,25 +31,49 @@ export default function HealthArticlesClient() {
         </p>
       </div>
 
-      {/* Category Tabs — flex-wrap ไม่มี scroll arrows */}
-      <div className="mb-10 flex flex-wrap items-center gap-x-6 border-b border-zinc-100">
-        {articleCategories.map((cat) => {
-          const isActive = selectedCategory === cat;
-          return (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setSelectedCategory(cat)}
-              className={`pb-3 text-sm transition-colors cursor-pointer border-b-2 -mb-px ${
-                isActive
-                  ? "border-[#622576] font-semibold text-zinc-900"
-                  : "border-transparent text-zinc-400 hover:text-zinc-700"
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
+      {/* Category Filter — บนมือถือเป็น Pill Chips แบบเลื่อนแนวนอนนุ่มนวล ไม่แออัดเบียดเสียด / เดสก์ท็อปเป็น Tab เรียบหรู */}
+      <div className="mb-8 sm:mb-10">
+        {/* มุมมองมือถือ (Mobile: < sm): เลื่อนแนวนอนอิสระ (Horizontal Scroll Pill Bar) มีระยะหายใจ ไม่ตกบรรทัดเบียดกัน */}
+        <div className="flex sm:hidden items-center gap-2 overflow-x-auto no-scrollbar -mx-5 px-5 py-1">
+          {articleCategories.map((cat) => {
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`shrink-0 rounded-full px-4 py-2 text-xs font-medium transition-all active:scale-95 ${
+                  isActive
+                    ? "bg-[#622576] text-white shadow-2xs font-semibold"
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200/80 hover:text-zinc-900"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* มุมมองแท็บเล็ต/เดสก์ท็อป (Desktop: sm+): Underline Tab สะอาดตา */}
+        <div className="hidden sm:flex flex-wrap items-center gap-x-6 border-b border-zinc-100">
+          {articleCategories.map((cat) => {
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`pb-3 text-sm transition-colors cursor-pointer border-b-2 -mb-px ${
+                  isActive
+                    ? "border-[#622576] font-semibold text-zinc-900"
+                    : "border-transparent text-zinc-400 hover:text-zinc-700"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Articles Grid (3 Columns) */}

@@ -53,11 +53,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={{ toast }}>
       {children}
-      {/* Toast container (ซ่อนในมุมมองมือถือ เอาออกตามความต้องการ) */}
+      {/* Toast container: บนมือถือแสดงด้านบนกลางจอ (Dynamic Island style) ไม่ทับปุ่มล่าง, บนเดสก์ท็อปอยู่ขวาล่าง */}
       <div
         aria-live="polite"
         aria-label="การแจ้งเตือน"
-        className="pointer-events-none fixed bottom-6 right-6 z-[9999] hidden sm:flex flex-col gap-2"
+        className="pointer-events-none fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 items-center sm:inset-x-auto sm:top-auto sm:bottom-6 sm:right-6 sm:items-end"
       >
         {toasts.map((t) => (
           <div

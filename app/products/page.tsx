@@ -12,7 +12,7 @@ export default function ProductsPage() {
   return (
     <>
       <ShopHeader />
-      <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:px-10">
+      <main className="mx-auto max-w-6xl px-5 py-5 sm:py-8 lg:py-12 sm:px-8 lg:px-10 overflow-x-clip">
         <Suspense fallback={<div className="py-20 text-center text-zinc-400">กำลังโหลดรายการสินค้า...</div>}>
           <ProductsClient />
         </Suspense>

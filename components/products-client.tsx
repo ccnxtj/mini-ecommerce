@@ -17,6 +17,8 @@ const PRICE_RANGES = [
 
 const SORT_OPTIONS = [
   { label: "เรียงตาม...", value: "default" },
+  { label: "สินค้าขายดี", value: "best-seller" },
+  { label: "สินค้ามาใหม่", value: "latest" },
   { label: "ราคา: ต่ำ – สูง", value: "price-asc" },
   { label: "ราคา: สูง – ต่ำ", value: "price-desc" },
   { label: "ชื่อสินค้า A–Z", value: "name-asc" },
@@ -76,6 +78,22 @@ export default function ProductsClient() {
     return result;
   }, [selectedCategory, priceRange, sort, searchQuery]);
 
+  const activeFilterCount = useMemo(() => {
+    return (
+      (selectedCategory !== "สินค้าทั้งหมด" ? 1 : 0) +
+      (priceRange > 0 ? 1 : 0) +
+      (searchQuery.trim() ? 1 : 0)
+    );
+  }, [selectedCategory, priceRange, searchQuery]);
+
+  const hasActiveFilter = activeFilterCount > 0;
+
+  const currentSortLabel = useMemo(() => {
+    if (sort === "default") return "เรียงลำดับ";
+    const found = SORT_OPTIONS.find((s) => s.value === sort);
+    return found ? found.label : "เรียงลำดับ";
+  }, [sort]);
+
   // ซ่อนหมวดหมู่อื่นๆ ไว้ก่อน เอาเฉพาะที่มีใน mockdata จริง
   const availableCategoryGroups = useMemo(() => {
     return categories
@@ -100,12 +118,13 @@ export default function ProductsClient() {
   }, []);
 
 
+
   const renderFilterContent = () => (
     <div className="space-y-4">
       {/* Shopee-style Category Header (แสดงเฉพาะบน Desktop เพราะบน Mobile มีหัวของ Modal แล้ว) */}
       <div className="hidden lg:flex items-center gap-2.5 pb-4 border-b border-zinc-100">
         <svg
-          className="size-5 text-[#622576]"
+          className="size-5 text-brand-purple-dark"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -127,7 +146,7 @@ export default function ProductsClient() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="ค้นหาชื่อสินค้า..."
-            className="w-full h-9 rounded-xl border border-zinc-200 bg-zinc-50 pl-8 pr-7 text-xs text-zinc-800 placeholder-zinc-400 outline-none focus:border-[#622576] focus:bg-white transition-colors"
+            className="w-full h-9 rounded-xl border border-zinc-200 bg-zinc-50 pl-8 pr-7 text-base sm:text-xs text-zinc-800 placeholder-zinc-400 outline-none focus:border-brand-purple focus:bg-white transition-colors"
           />
           <svg
             className="absolute left-2.5 top-2.5 size-4 text-zinc-400"
@@ -160,24 +179,23 @@ export default function ProductsClient() {
             type="button"
             onClick={() => {
               setSelectedCategory("สินค้าทั้งหมด");
-              setIsMobileFilterOpen(false);
             }}
             className={`group flex w-full items-center justify-between text-left text-sm py-2 px-3 rounded-xl transition-all ${
               selectedCategory === "สินค้าทั้งหมด"
-                ? "bg-[#fbf6fc] font-bold text-[#622576]"
-                : "text-zinc-700 hover:bg-zinc-50 hover:text-[#622576]"
+                ? "bg-brand-purple-tint font-bold text-brand-purple-dark"
+                : "text-zinc-700 hover:bg-zinc-50 hover:text-brand-purple-dark"
             }`}
           >
             <span className="flex items-center gap-2">
               {selectedCategory === "สินค้าทั้งหมด" && (
-                <span className="text-[#622576] font-bold text-xs">▸</span>
+                <span className="text-brand-purple-dark font-bold text-xs">▸</span>
               )}
               <span>สินค้าทั้งหมด</span>
             </span>
             <span
               className={`text-xs ${
                 selectedCategory === "สินค้าทั้งหมด"
-                  ? "text-[#622576] font-semibold"
+                  ? "text-brand-purple-dark font-semibold"
                   : "text-zinc-400"
               }`}
             >
@@ -202,23 +220,22 @@ export default function ProductsClient() {
                       type="button"
                       onClick={() => {
                         setSelectedCategory(item);
-                        setIsMobileFilterOpen(false);
                       }}
                       className={`group flex w-full items-center justify-between text-left py-2 px-3 rounded-xl text-sm transition-all ${
                         isSelected
-                          ? "bg-[#fbf6fc] font-bold text-[#622576]"
-                          : "text-zinc-700 hover:bg-zinc-50 hover:text-[#622576]"
+                          ? "bg-brand-purple-tint font-bold text-brand-purple-dark"
+                          : "text-zinc-700 hover:bg-zinc-50 hover:text-brand-purple-dark"
                       }`}
                     >
                       <span className="flex items-center gap-2 truncate">
                         {isSelected && (
-                          <span className="text-[#622576] font-bold text-xs">▸</span>
+                          <span className="text-brand-purple-dark font-bold text-xs">▸</span>
                         )}
                         <span className="truncate">{item}</span>
                       </span>
                       <span
                         className={`text-xs shrink-0 ml-1.5 ${
-                          isSelected ? "text-[#622576] font-semibold" : "text-zinc-400"
+                          isSelected ? "text-brand-purple-dark font-semibold" : "text-zinc-400"
                         }`}
                       >
                         ({count})
@@ -241,23 +258,22 @@ export default function ProductsClient() {
                 type="button"
                 onClick={() => {
                   setSelectedCategory(item);
-                  setIsMobileFilterOpen(false);
                 }}
                 className={`group flex w-full items-center justify-between text-left py-2 px-3 rounded-xl text-sm transition-all ${
                   isSelected
-                    ? "bg-[#fbf6fc] font-bold text-[#622576]"
-                    : "text-zinc-700 hover:bg-zinc-50 hover:text-[#622576]"
+                    ? "bg-brand-purple-tint font-bold text-brand-purple-dark"
+                    : "text-zinc-700 hover:bg-zinc-50 hover:text-brand-purple-dark"
                 }`}
               >
                 <span className="flex items-center gap-2 truncate">
                   {isSelected && (
-                    <span className="text-[#622576] font-bold text-xs">▸</span>
+                    <span className="text-brand-purple-dark font-bold text-xs">▸</span>
                   )}
                   <span className="truncate">{item}</span>
                 </span>
                 <span
                   className={`text-xs shrink-0 ml-1.5 ${
-                    isSelected ? "text-[#622576] font-semibold" : "text-zinc-400"
+                    isSelected ? "text-brand-purple-dark font-semibold" : "text-zinc-400"
                   }`}
                 >
                   ({count})
@@ -282,15 +298,15 @@ export default function ProductsClient() {
                   onClick={() => setPriceRange(i)}
                   className={`group flex w-full items-center justify-between text-left py-2 px-3 rounded-xl text-sm transition-all ${
                     isSelected
-                      ? "bg-[#fbf6fc] font-bold text-[#622576]"
-                      : "text-zinc-700 hover:bg-zinc-50 hover:text-[#622576]"
+                      ? "bg-brand-purple-tint font-bold text-brand-purple-dark"
+                      : "text-zinc-700 hover:bg-zinc-50 hover:text-brand-purple-dark"
                   }`}
                 >
                   <span className="flex items-center gap-2">
                     <span
                       className={`size-3.5 rounded-full border flex items-center justify-center transition-colors ${
                         isSelected
-                          ? "border-[#622576] bg-[#622576]"
+                          ? "border-brand-purple-dark bg-brand-purple-dark"
                           : "border-zinc-300 bg-white"
                       }`}
                     >
@@ -309,8 +325,8 @@ export default function ProductsClient() {
 
   return (
     <>
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
+      {/* Breadcrumb Navigation (ซ่อนบนมือถือเพื่อคืนพื้นที่หน้าจอ แสดงเฉพาะจอคอม sm+) */}
+      <nav aria-label="Breadcrumb" className="hidden sm:flex items-center gap-2 text-sm text-zinc-500 mb-6">
         <Link href="/" className="hover:text-zinc-800 transition-colors">
           หน้าแรก
         </Link>
@@ -320,38 +336,84 @@ export default function ProductsClient() {
         <span className="font-medium text-zinc-900">{selectedCategory}</span>
       </nav>
 
-      {/* Mobile Minimal Filter & Sort Toolbar (1 sleek row) */}
-      <div className="mb-4 flex items-center justify-between gap-2.5 lg:hidden">
+      {/* Mobile Minimal Filter & Sort Toolbar (Unified Segmented Bar) */}
+      <div className="mb-4 flex items-center h-11 rounded-xl border border-zinc-200/90 bg-white shadow-2xs divide-x divide-zinc-200/80 overflow-hidden lg:hidden">
         {/* ปุ่มตัวกรอง */}
         <button
           type="button"
           onClick={() => setIsMobileFilterOpen(true)}
-          className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-zinc-200/90 bg-white h-10 px-3 text-xs font-semibold text-zinc-800 shadow-2xs active:bg-zinc-50 transition-colors"
+          className={`flex-1 h-full flex items-center justify-center gap-2 px-3 text-xs transition-colors ${
+            hasActiveFilter
+              ? "bg-brand-purple-tint/70 text-brand-purple-dark font-semibold"
+              : "text-zinc-700 font-medium hover:bg-zinc-50 active:bg-zinc-100"
+          }`}
+          aria-label="เปิดตัวกรองและหมวดหมู่"
         >
-          <svg className="size-4 text-[#622576]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+          <svg
+            className={`size-4 shrink-0 transition-colors ${hasActiveFilter ? "text-brand-purple-dark" : "text-zinc-500"}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+            />
           </svg>
-          <span className="truncate">
-            ตัวกรอง{selectedCategory !== "สินค้าทั้งหมด" || priceRange > 0 ? ` (${[selectedCategory !== "สินค้าทั้งหมด" ? selectedCategory : null, priceRange > 0 ? PRICE_RANGES[priceRange].label : null].filter(Boolean).join(", ")})` : ""}
-          </span>
+          <span className="truncate">ตัวกรอง</span>
+          {hasActiveFilter && (
+            <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-purple-dark text-[11px] font-bold text-white leading-none">
+              {activeFilterCount}
+            </span>
+          )}
         </button>
 
         {/* Dropdown เรียงลำดับ */}
-        <div className="flex-1 relative">
+        <div
+          className={`flex-1 h-full relative flex items-center justify-center px-3 transition-colors ${
+            sort !== "default"
+              ? "bg-brand-purple-tint/40 text-brand-purple-dark font-semibold"
+              : "text-zinc-700 font-medium hover:bg-zinc-50 active:bg-zinc-100"
+          }`}
+        >
+          <div className="flex items-center justify-center gap-1.5 min-w-0 pointer-events-none">
+            <svg
+              className={`size-3.5 shrink-0 transition-colors ${sort !== "default" ? "text-brand-purple-dark" : "text-zinc-400"}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+            </svg>
+            <span className="text-xs truncate">
+              {currentSortLabel}
+            </span>
+            <svg
+              className="size-3 shrink-0 text-zinc-400 ml-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="w-full h-10 rounded-xl border border-zinc-200/90 bg-white pl-3.5 pr-8 text-xs font-semibold text-zinc-800 outline-none focus:border-[#622576] shadow-2xs appearance-none"
+            className="absolute inset-0 size-full opacity-0 cursor-pointer text-base"
+            aria-label="เรียงลำดับสินค้า"
           >
             {SORT_OPTIONS.map((s) => (
               <option key={s.value} value={s.value}>
-                เรียง: {s.label}
+                {s.label}
               </option>
             ))}
           </select>
-          <svg className="pointer-events-none absolute right-3 top-3.5 size-3.5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-          </svg>
         </div>
       </div>
 
@@ -364,9 +426,9 @@ export default function ProductsClient() {
             aria-hidden="true"
           />
           <div className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] flex flex-col rounded-t-2xl bg-white shadow-2xl">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100">
               <div className="flex items-center gap-2">
-                <svg className="size-5 text-[#622576]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <svg className="size-5 text-brand-purple-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
                 </svg>
                 <h2 className="text-base font-bold text-zinc-900">ตัวกรองและหมวดหมู่</h2>
@@ -374,8 +436,8 @@ export default function ProductsClient() {
               <button
                 type="button"
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="rounded-full p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700"
-                aria-label="ปิด"
+                className="flex size-11 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 transition-colors"
+                aria-label="ปิดหน้าต่างตัวกรอง"
               >
                 <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -395,14 +457,14 @@ export default function ProductsClient() {
                   setPriceRange(0);
                   setSearchQuery("");
                 }}
-                className="flex-1 rounded-xl border border-zinc-300 bg-white py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-colors"
+                className="flex-1 min-h-11 rounded-xl border border-zinc-300 bg-white py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-colors"
               >
                 ล้างตัวกรอง
               </button>
               <button
                 type="button"
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="flex-1 rounded-xl bg-[#622576] py-2.5 text-xs font-semibold text-white hover:bg-[#521e64] shadow-xs transition-colors"
+                className="flex-1 min-h-11 rounded-xl bg-brand-purple-dark py-2.5 text-xs font-semibold text-white hover:bg-brand-purple-hover shadow-xs transition-colors"
               >
                 ดูสินค้า ({filtered.length})
               </button>
@@ -434,7 +496,7 @@ export default function ProductsClient() {
                 onClick={() => setSort("default")}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold shrink-0 transition-all ${
                   sort === "default"
-                    ? "bg-[#622576] text-white shadow-xs"
+                    ? "bg-brand-purple-dark text-white shadow-xs"
                     : "bg-white text-zinc-700 hover:bg-zinc-50 border border-zinc-200/80"
                 }`}
               >
@@ -445,7 +507,7 @@ export default function ProductsClient() {
                 onClick={() => setSort("latest")}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold shrink-0 transition-all ${
                   sort === "latest"
-                    ? "bg-[#622576] text-white shadow-xs"
+                    ? "bg-brand-purple-dark text-white shadow-xs"
                     : "bg-white text-zinc-700 hover:bg-zinc-50 border border-zinc-200/80"
                 }`}
               >
@@ -456,7 +518,7 @@ export default function ProductsClient() {
                 onClick={() => setSort("best-seller")}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold shrink-0 transition-all ${
                   sort === "best-seller"
-                    ? "bg-[#622576] text-white shadow-xs"
+                    ? "bg-brand-purple-dark text-white shadow-xs"
                     : "bg-white text-zinc-700 hover:bg-zinc-50 border border-zinc-200/80"
                 }`}
               >
@@ -469,7 +531,7 @@ export default function ProductsClient() {
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
-                className="h-8.5 sm:h-9 w-full rounded-lg border border-zinc-200/90 bg-white px-2 sm:px-3 text-xs text-zinc-800 outline-none focus:border-[#622576] shadow-2xs sm:w-36"
+                className="h-8.5 sm:h-9 w-full rounded-lg border border-zinc-200/90 bg-white px-2 sm:px-3 text-xs text-zinc-800 outline-none focus:border-brand-purple-dark shadow-2xs sm:w-36"
               >
                 {PRICE_RANGES.map((r, i) => (
                   <option key={r.label} value={i}>
@@ -481,7 +543,7 @@ export default function ProductsClient() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="h-8.5 sm:h-9 w-full rounded-lg border border-zinc-200/90 bg-white px-2 sm:px-3 text-xs text-zinc-800 outline-none focus:border-[#622576] shadow-2xs sm:w-40"
+                className="h-8.5 sm:h-9 w-full rounded-lg border border-zinc-200/90 bg-white px-2 sm:px-3 text-xs text-zinc-800 outline-none focus:border-brand-purple-dark shadow-2xs sm:w-40"
               >
                 {SORT_OPTIONS.map((s) => (
                   <option key={s.value} value={s.value}>
@@ -492,10 +554,10 @@ export default function ProductsClient() {
             </div>
           </div>
 
-          {/* Products Grid */}
+          {/* Products Grid with relaxed macro breathing room */}
           <div className="mt-4">
             {filtered.length > 0 ? (
-              <div className="grid grid-cols-2 gap-2.5 sm:gap-5 lg:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3.5 sm:gap-5 lg:grid-cols-3">
                 {filtered.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -515,7 +577,7 @@ export default function ProductsClient() {
                     d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
                   />
                 </svg>
-                <p className="text-[#40184f] font-bold text-base">
+                <p className="text-brand-purple-dark font-bold text-base">
                   {searchQuery.trim()
                     ? `ไม่พบสินค้าที่ตรงกับการค้นหา "${searchQuery}"`
                     : priceRange > 0
@@ -535,7 +597,7 @@ export default function ProductsClient() {
                     setSort("default");
                     setSearchQuery("");
                   }}
-                  className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-[#622576] px-5 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-[#521e64] transition-colors"
+                  className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-brand-purple-dark px-5 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-brand-purple-hover transition-colors"
                 >
                   <span>ดูสินค้าทั้งหมด ({products.length} รายการ)</span>
                   <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

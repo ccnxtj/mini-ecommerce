@@ -17,6 +17,9 @@ export type Order = {
   items: OrderItem[];
   total: number;
   status: string;
+  recipientName?: string;
+  phone?: string;
+  address?: string;
 };
 
 type OrderContextType = {

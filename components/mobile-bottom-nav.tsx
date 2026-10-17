@@ -54,7 +54,7 @@ export default function MobileBottomNav() {
           <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2.4 : 1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
           </svg>
-          <CartBadge />
+          <CartBadge className="ring-2 ring-white" />
         </div>
       ),
     },
@@ -63,7 +63,7 @@ export default function MobileBottomNav() {
   return (
     <nav
       aria-label="เมนูหลักสำหรับมือถือ"
-      className="fixed bottom-0 inset-x-0 z-40 block md:hidden bg-white/95 backdrop-blur-md border-t border-zinc-200/80 shadow-[0_-2px_10px_rgba(0,0,0,0.04)]"
+      className="fixed bottom-0 inset-x-0 z-40 block md:hidden bg-white/95 backdrop-blur-md border-t border-zinc-200/80 shadow-[0_-2px_10px_rgba(0,0,0,0.04)] pb-[env(safe-area-inset-bottom)]"
     >
       <div className="flex items-center justify-around h-14 max-w-md mx-auto px-2">
         {navItems.map((item) => {
@@ -73,11 +73,11 @@ export default function MobileBottomNav() {
               key={item.href}
               href={item.href}
               className={`flex flex-1 flex-col items-center justify-center py-1 transition-colors select-none ${
-                isActive ? "text-[#622576] font-semibold" : "text-zinc-500 hover:text-zinc-800"
+                isActive ? "text-brand-purple font-semibold" : "text-zinc-500 hover:text-zinc-800"
               }`}
             >
               {item.icon(isActive)}
-              <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+              <span className="text-xs mt-0.5 tracking-tight">{item.label}</span>
             </Link>
           );
         })}

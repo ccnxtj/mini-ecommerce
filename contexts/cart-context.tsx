@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import CartFeedbackModal, { type FeedbackModalState } from "@/components/cart-feedback-modal";
 
 export type CartItem = {
   id: string;
@@ -14,8 +15,9 @@ export type CartItem = {
 
 type CartContextType = {
   cart: CartItem[];
-  addToCart: (item: Omit<CartItem, "quantity" | "selected">, qty?: number) => void;
-  removeFromCart: (id: string) => void;
+  isLoaded: boolean;
+  addToCart: (item: Omit<CartItem, "quantity" | "selected">, qty?: number, silent?: boolean) => void;
+  removeFromCart: (id: string, silent?: boolean) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   isInCart: (id: string) => boolean;
@@ -30,14 +32,71 @@ type CartContextType = {
   selectedTotalItems: number;
   selectedTotalPrice: number;
   isAllSelected: boolean;
+  // Feedback Modal
+  feedbackModal: FeedbackModalState;
+  showFeedbackModal: (type: "add" | "remove", item: FeedbackModalState["item"]) => void;
+  closeFeedbackModal: () => void;
 };
+
+const CART_STORAGE_KEY = "allwell_cart";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const addToCart = (item: Omit<CartItem, "quantity" | "selected">, qty = 1) => {
+  // 1. โหลดข้อมูลตะกร้าสินค้าจาก localStorage เมื่อ Component ถูก Mount บน Client (Side Effect)
+  useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+      if (savedCart) {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          setCart(parsed);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load cart from localStorage", error);
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  // 2. บันทึกข้อมูลตะกร้าสินค้าลง localStorage อัตโนมัติเมื่อ cart เปลี่ยนแปลง (หลังจากโหลดครั้งแรกเสร็จแล้ว)
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    } catch (error) {
+      console.error("Failed to save cart to localStorage", error);
+    }
+  }, [cart, isLoaded]);
+  const [feedbackModal, setFeedbackModal] = useState<FeedbackModalState>({
+    isOpen: false,
+    type: "add",
+    status: "loading",
+    item: { name: "" },
+  });
+
+  const closeFeedbackModal = () => {
+    setFeedbackModal((prev) => ({ ...prev, isOpen: false }));
+  };
+
+  const showFeedbackModal = (type: "add" | "remove", item: FeedbackModalState["item"]) => {
+    setFeedbackModal({
+      isOpen: true,
+      type,
+      status: "complete",
+      item,
+    });
+  };
+
+  const addToCart = (
+    item: Omit<CartItem, "quantity" | "selected">,
+    qty = 1,
+    silent = false
+  ) => {
     setCart((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       if (existing) {
@@ -47,10 +106,29 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { ...item, quantity: qty, selected: true }];
     });
+
+    if (!silent) {
+      showFeedbackModal("add", {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.image,
+        quantity: qty,
+      });
+    }
   };
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id: string, silent = false) => {
+    const itemToRemove = cart.find((i) => i.id === id);
     setCart((prev) => prev.filter((i) => i.id !== id));
+
+    if (!silent && itemToRemove) {
+      showFeedbackModal("remove", {
+        id,
+        name: itemToRemove.name,
+        image: itemToRemove.image,
+      });
+    }
   };
 
   const updateQuantity = (id: string, quantity: number) => {
@@ -96,6 +174,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         cart,
+        isLoaded,
         addToCart,
         removeFromCart,
         updateQuantity,
@@ -111,9 +190,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         selectedTotalItems,
         selectedTotalPrice,
         isAllSelected,
+        feedbackModal,
+        showFeedbackModal,
+        closeFeedbackModal,
       }}
     >
       {children}
+      <CartFeedbackModal feedback={feedbackModal} onClose={closeFeedbackModal} />
     </CartContext.Provider>
   );
 }

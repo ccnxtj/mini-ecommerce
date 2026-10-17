@@ -12,11 +12,13 @@ export default function WishlistPage() {
   return (
     <>
       <ShopHeader />
-      <main className="mx-auto min-h-[60vh] max-w-6xl px-5 py-12 sm:px-8 lg:px-10">
-        <Link href="/" className="text-sm text-[#622576] hover:underline">← กลับหน้าแรก</Link>
-        <h1 className="mt-5 text-3xl font-bold text-[#40184f]">สินค้าที่ชื่นชอบ</h1>
-        <p className="mt-2 text-[#69576e]">รายการสินค้าที่คุณกดหัวใจเก็บไว้</p>
-        
+      <main className="mx-auto min-h-[60vh] max-w-6xl px-4 py-5 sm:px-8 sm:py-10 lg:px-10 overflow-x-clip">
+        <nav aria-label="Breadcrumb" className="mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-zinc-500">
+          <Link href="/" className="hover:text-zinc-800 transition-colors">หน้าแรก</Link>
+          <span aria-hidden="true">/</span>
+          <span className="font-medium text-zinc-900">สินค้าที่ชื่นชอบ</span>
+        </nav>
+
         <WishlistGrid />
       </main>
     </>

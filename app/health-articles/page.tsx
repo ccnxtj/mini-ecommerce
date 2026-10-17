@@ -12,7 +12,7 @@ export default function HealthArticlesPage() {
   return (
     <div className="min-h-screen bg-white">
       <ShopHeader />
-      <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
+      <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10 overflow-x-clip">
         <Suspense
           fallback={
             <div className="py-20 text-center text-zinc-400">
